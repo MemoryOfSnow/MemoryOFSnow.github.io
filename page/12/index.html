@@ -156,6 +156,91 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://blueinyou.com/categories/ML/SL-05/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://blueinyou.com/photos/avatar.jpg">
+      <meta itemprop="name" content="Paul C">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Paul C's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/categories/ML/SL-05/" class="post-title-link" itemprop="url">梯度下降法、[拟]牛顿法</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2022-03-30 16:14:53" itemprop="dateCreated datePublished" datetime="2022-03-30T16:14:53+08:00">2022-03-30</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2022-06-04 03:03:58" itemprop="dateModified" datetime="2022-06-04T03:03:58+08:00">2022-06-04</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/ML/" itemprop="url" rel="index"><span itemprop="name">机器学习</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="GD"><a href="#GD" class="headerlink" title="GD"></a>GD</h2><p>Gradient Decent/Steepest Decent，求解无约束最优化问题。</p>
+<p><img src="/categories/ML/SL-05/image-20220330173751248.png" alt="image-20220330173751248" style="zoom:33%;"></p>
+<p>负梯度方向是使函数值下降最快的方向。</p>
+<p><img src="/categories/ML/SL-05/image-20220330181452563.png" alt="image-20220330181452563"></p>
+<p>否则，不断地找f(x)的极小值点x，办法是让x=x-df(x)* λ，最关键的是找到合适的λ。</p>
+<p>举例如下：</p>
+<p><img src="/categories/ML/SL-05/image-20220330181942932.png" alt="image-20220330181942932"></p>
+<p>梯度下降法收敛速度不一定快，而牛顿法和拟牛顿法，收敛速度更快。</p>
+<h2 id="Newton-Method"><a href="#Newton-Method" class="headerlink" title="Newton Method"></a>Newton Method</h2><p>求解无约束最优化问题的迭代算法，每一步需要求解目标函数的海森矩阵的逆矩阵。</p>
+<p>基本思想:在现有极小值估计值的附近对f(x)做泰勒展开，进而找到<strong>极小值的下一个估计</strong>值。</p>
+<p><img src="/categories/ML/SL-05/image-20220330182720475.png" alt="image-20220330182720475"></p>
+<h2 id="quasi-Newton-Method"><a href="#quasi-Newton-Method" class="headerlink" title="quasi-Newton Method"></a>quasi-Newton Method</h2><p>通过正定矩阵近似海森矩阵(的逆矩阵)。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="https://blueinyou.com/categories/ML/HCIA-AI01/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -926,98 +1011,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://blueinyou.com/categories/ML/CNN01/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="https://blueinyou.com/photos/avatar.jpg">
-      <meta itemprop="name" content="Paul C">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Paul C's Blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/categories/ML/CNN01/" class="post-title-link" itemprop="url">CNN01</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2022-03-06 20:43:22" itemprop="dateCreated datePublished" datetime="2022-03-06T20:43:22+08:00">2022-03-06</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2023-08-10 15:57:18" itemprop="dateModified" datetime="2023-08-10T15:57:18+08:00">2023-08-10</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/ML/" itemprop="url" rel="index"><span itemprop="name">机器学习</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <blockquote>
-<p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1e54y1b7uk?p=4">吴恩达深度学习-卷积神经网络</a></p>
-</blockquote>
-<h2 id="1-介绍"><a href="#1-介绍" class="headerlink" title="1.介绍"></a>1.介绍</h2><p>Neural Style transfer神经风格转换：</p>
-<p>通过NN把内容图像按照风格图像重绘。</p>
-<p>参数过多，训练时对内存和计算量的需求过大；</p>
-<p>数据获得的太少，导致过拟合；</p>
-<h2 id="2-卷积计算"><a href="#2-卷积计算" class="headerlink" title="2.卷积计算"></a>2.卷积计算</h2><p><img src="/categories/ML/CNN01/1691653575850.png" alt="1691653575850"></p>
-<p>输出维度取决于卷积核的数量N_filter。</p>
-<p> <strong>参数量=（K<em>K \</em> 前一层特征图的通道数 ）* 当前层N_filter </strong>+偏置项（一般默认等于N_filter*D_filter）</p>
-<p>image—&gt;filter—-&gt;image</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nn.Conv2d<span class="comment">#conv-forward</span></span><br></pre></td></tr></table></figure>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/categories/ML/CNN01/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1089,7 +1082,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">181</span>
+          <span class="site-state-item-count">182</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>

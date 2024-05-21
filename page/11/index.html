@@ -156,6 +156,99 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://blueinyou.com/categories/ML/%E7%BA%BF%E6%80%A7SVM/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://blueinyou.com/photos/avatar.jpg">
+      <meta itemprop="name" content="Paul C">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Paul C's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/categories/ML/%E7%BA%BF%E6%80%A7SVM/" class="post-title-link" itemprop="url">SVM</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2022-06-07 14:17:22" itemprop="dateCreated datePublished" datetime="2022-06-07T14:17:22+08:00">2022-06-07</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2022-06-23 01:24:20" itemprop="dateModified" datetime="2022-06-23T01:24:20+08:00">2022-06-23</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/ML/" itemprop="url" rel="index"><span itemprop="name">机器学习</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p><strong>学习策略：间隔最大化。</strong>形式化为一个凸二次规划(convex quadratic programming)问题，等价于正则式的合页损失函数的最小化问题。</p>
+<p>由简到繁：</p>
+<ul>
+<li>线性可分——&gt;学习线性的分类器——&gt;线性可分（硬间隔）支持向量机；</li>
+<li>数据近似线性可分—&gt;软间隔最大化—&gt;学习线性的分类器—&gt;线性支持向量机；</li>
+<li>数据线性不可分—&gt;kernel trick+软间隔最大化—&gt;非线性支持向量机（等价于在高维空间中学习线性支持向量机)；</li>
+</ul>
+<h2 id="1-超平面："><a href="#1-超平面：" class="headerlink" title="1.超平面："></a>1.超平面：</h2><p><img src="/categories/ML/%E7%BA%BF%E6%80%A7SVM/image-20220526234208124.png" alt="image-20220526234208124"></p>
+<h2 id="2-函数间隔和几何间隔"><a href="#2-函数间隔和几何间隔" class="headerlink" title="2.函数间隔和几何间隔"></a>2.函数间隔和几何间隔</h2><p>因为超平面wx+b=0，所以对于点(xi,yi)，(wxi+bi)能够表示点距离超平面的远近，其与yi的乘积的符号可以用来表示分类的正确性(-1表示分类错误，分类正确时)。</p>
+<p>所以ri=yi(wxi+bi)定义为超平面关于样本点(xi,yi)的函数间隔；超平面关于训练集T的函数间隔为所有超平面关于每个样本点的函数间隔的最小值。</p>
+<p>r’=min(ri)</p>
+<p>函数间隔规范化（<strong>确保超平面不变的时候，间隔也是确定的</strong>）后，即w=w/||w||,b=b/||w||，函数间隔<code>r&#39;</code>变为<strong>几何间隔</strong><code>r</code>。</p>
+<p><strong>约束优化问题为：</strong>求解能够正确划分训练数据集并且使得几何间隔最大的<strong>分离超平面</strong>。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/categories/ML/%E7%BA%BF%E6%80%A7SVM/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="https://blueinyou.com/categories/Algo/%E6%9C%80%E4%BC%98%E5%8C%96%E9%97%AE%E9%A2%98/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1004,91 +1097,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://blueinyou.com/categories/ML/SL-05/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="https://blueinyou.com/photos/avatar.jpg">
-      <meta itemprop="name" content="Paul C">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Paul C's Blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/categories/ML/SL-05/" class="post-title-link" itemprop="url">梯度下降法、[拟]牛顿法</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2022-03-30 16:14:53" itemprop="dateCreated datePublished" datetime="2022-03-30T16:14:53+08:00">2022-03-30</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-06-04 03:03:58" itemprop="dateModified" datetime="2022-06-04T03:03:58+08:00">2022-06-04</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/ML/" itemprop="url" rel="index"><span itemprop="name">机器学习</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="GD"><a href="#GD" class="headerlink" title="GD"></a>GD</h2><p>Gradient Decent/Steepest Decent，求解无约束最优化问题。</p>
-<p><img src="/categories/ML/SL-05/image-20220330173751248.png" alt="image-20220330173751248" style="zoom:33%;"></p>
-<p>负梯度方向是使函数值下降最快的方向。</p>
-<p><img src="/categories/ML/SL-05/image-20220330181452563.png" alt="image-20220330181452563"></p>
-<p>否则，不断地找f(x)的极小值点x，办法是让x=x-df(x)* λ，最关键的是找到合适的λ。</p>
-<p>举例如下：</p>
-<p><img src="/categories/ML/SL-05/image-20220330181942932.png" alt="image-20220330181942932"></p>
-<p>梯度下降法收敛速度不一定快，而牛顿法和拟牛顿法，收敛速度更快。</p>
-<h2 id="Newton-Method"><a href="#Newton-Method" class="headerlink" title="Newton Method"></a>Newton Method</h2><p>求解无约束最优化问题的迭代算法，每一步需要求解目标函数的海森矩阵的逆矩阵。</p>
-<p>基本思想:在现有极小值估计值的附近对f(x)做泰勒展开，进而找到<strong>极小值的下一个估计</strong>值。</p>
-<p><img src="/categories/ML/SL-05/image-20220330182720475.png" alt="image-20220330182720475"></p>
-<h2 id="quasi-Newton-Method"><a href="#quasi-Newton-Method" class="headerlink" title="quasi-Newton Method"></a>quasi-Newton Method</h2><p>通过正定矩阵近似海森矩阵(的逆矩阵)。</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1160,7 +1168,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">181</span>
+          <span class="site-state-item-count">182</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>

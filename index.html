@@ -156,6 +156,88 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://blueinyou.com/categories/ML/Few-Shot28/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://blueinyou.com/photos/avatar.jpg">
+      <meta itemprop="name" content="Paul C">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Paul C's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/categories/ML/Few-Shot28/" class="post-title-link" itemprop="url">特征哈希</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2024-05-21 14:53:22 / Modified: 19:49:02" itemprop="dateCreated datePublished" datetime="2024-05-21T14:53:22+08:00">2024-05-21</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/ML/" itemprop="url" rel="index"><span itemprop="name">机器学习</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>特征散列的优点在于它能够<strong>显著压缩参数</strong>向量的存储。通过散列，我们能够将其减少到O(m) 个数字，同时<strong>避免</strong>局部敏感散列中常见的高成本矩阵向量乘法。此外，结果向量的<strong>稀疏性</strong>得以保留。</p>
+<h2 id="应用场景"><a href="#应用场景" class="headerlink" title="应用场景"></a>应用场景</h2><p>特别是，内存受限时，特征哈希非常有用。</p>
+<p>消除频繁标记减少参数的存储量会导致攻击者创建非常不频繁但典型的垃圾邮件标记。如果所有单词都被散列成一个有限大小的特征向量，那么不频繁但类别指示性的标记就有机会对分类结果做出贡献。</p>
+<p>大规模多类估计我们还可以<strong>将大规模多类分类视为多任务问题</strong>，并以类似于个性化设置的方式应用特征哈希。我们不是为每个用户使用不同的哈希函数，而是为每个类使用不同的哈希函数。</p>
+<h2 id="大稀疏矩阵的分解"><a href="#大稀疏矩阵的分解" class="headerlink" title="大稀疏矩阵的分解"></a>大稀疏矩阵的分解</h2><p><img src="/categories/ML/Few-Shot28/1716291373182.png" alt="1716291373182"></p>
+<p>将用户和每个Token链接后再做hash.</p>
+<p><img src="/categories/ML/Few-Shot28/1716291505137.png" alt="1716291505137"></p>
+<h2 id="评价指标"><a href="#评价指标" class="headerlink" title="评价指标"></a>评价指标</h2><h3 id="错误分类率，相对基线未捕获到的恶意邮件数量"><a href="#错误分类率，相对基线未捕获到的恶意邮件数量" class="headerlink" title="错误分类率，相对基线未捕获到的恶意邮件数量"></a>错误分类率，相对基线未捕获到的恶意邮件数量</h3><p>恶意邮件里，把正确的邮件错误分类为恶意是无法容忍的；而对于恶意软件，把恶意错误分类为良性是无法容忍的，定义恶意软件为P，则要求召回率尽可能高。</p>
+<p><img src="/categories/ML/Few-Shot28/1716291707201.png" alt="1716291707201"></p>
+<p>一种有效的评价方法。把用户根据其贡献的邮件数量排序放入桶里，衡量对于不同的桶，垃圾邮件的错误分类率是否下降。</p>
+<p>22，24,26的哈希位数可以让垃圾邮件的错误率下降到最低；</p>
+<p>独立哈希子空间之间的干扰可以忽略不计，并且概率很高，这允许在非常压缩的空间中进行大规模多任务学习。</p>
+<p>每个有限长度的字符串可以表示为一个自然数字。</p>
+<p><img src="/categories/ML/Few-Shot28/1716290714997.png" alt="1716290714997"></p>
+<p>把每个维度映射到±1，再求累计和。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="https://blueinyou.com/categories/ML/Few-Shot24/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -187,7 +269,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2024-05-12 21:51:03" itemprop="dateModified" datetime="2024-05-12T21:51:03+08:00">2024-05-12</time>
+                <time title="Modified: 2024-05-12 21:52:04" itemprop="dateModified" datetime="2024-05-12T21:52:04+08:00">2024-05-12</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -266,6 +348,7 @@
 <h2 id="实验"><a href="#实验" class="headerlink" title="实验"></a>实验</h2><p>1.传统特征+传统模型（CNN，SVM+RBF,RNN+LR)</p>
 <p>2.异构图+GNN，足够多的数据的监督学习</p>
 <p>3.自监督方式：API+生成对抗自动编码器,Gaph Contrastive Coding</p>
+<p><strong>BIG2015的使用</strong></p>
 <p>BIG 2015数据集不适用于基于API的分析方法，它仅包含脱敏静态签名特征，只具有PP（进程fork)，PAP（进程调用APi)，PSP（进程签名）等三种元路径。RNN+LR、API+AAE生成对抗自动编码器、MatchGNet、MG-DVD均基于动态行为分析方法，因此BIG 2015数据集不能用于上述4种基线方法的实验验证</p>
 <p>运行10次，比较平均结果。</p>
 <p>1.四种常用数据集上的多分类任务，</p>
@@ -1056,117 +1139,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://blueinyou.com/categories/ML/Few-Shot21/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="https://blueinyou.com/photos/avatar.jpg">
-      <meta itemprop="name" content="Paul C">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Paul C's Blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/categories/ML/Few-Shot21/" class="post-title-link" itemprop="url">Are LSTMs Good Few-Shot Learners?</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2023-11-30 16:13:22" itemprop="dateCreated datePublished" datetime="2023-11-30T16:13:22+08:00">2023-11-30</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2023-12-04 19:35:32" itemprop="dateModified" datetime="2023-12-04T19:35:32+08:00">2023-12-04</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/ML/" itemprop="url" rel="index"><span itemprop="name">机器学习</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <blockquote>
-<p>看论文，C刊及以下的一般不看介绍和相关工作部分，只看一眼本文贡献。</p>
-</blockquote>
-<p>面对一项新任务时，LSTM的权重是固定的。</p>
-<p>1.支持集的隐藏嵌入层并不是排列不变的。—&gt;通过对训练样本的平均池化</p>
-<p>2.学习算法和输入嵌入机制交错，带来优化挑战和增加过拟合风险—&gt;解耦</p>
-<h2 id="LSTM"><a href="#LSTM" class="headerlink" title="LSTM"></a>LSTM</h2><p>只是获取给定任务的训练数据，并根据生成的隐藏状态来调整新查询输入的预测。把支持集当作序列而非集合</p>
-<p>LSTM’s predictions for unseen inputs (queries) are conditioned on the hidden state h_M and cell state c_M .</p>
-<ul>
-<li>Should make the hidden embedding be invariant to the order in which the examples are fed into the LSTM.</li>
-</ul>
-<h2 id="Outer-Product-LSTM"><a href="#Outer-Product-LSTM" class="headerlink" title="Outer Product LSTM"></a>Outer Product LSTM</h2><p><img src="/categories/ML/Few-Shot21/1701685370310.png" alt="1701685370310"></p>
-<p>通过加上生成的隐状态和前一层输出的外积来更新当前隐藏矩阵。</p>
-<p>adjusting the weights of the LSTM using backpropagation across different tasks</p>
-<p>does not update the biases</p>
-<p>base-learner ：</p>
-<ul>
-<li><p>Use an LSTM to learn the weight update rule </p>
-</li>
-<li><p>good initialization parameters </p>
-</li>
-</ul>
-<h2 id="Performance"><a href="#Performance" class="headerlink" title="Performance"></a>Performance</h2><p>与四种方法作对比：MAML、prototypical network、SAP、Warp-MAML；</p>
-<p>在两类问题：few-shot sine wave regression、image classification benchmarks</p>
-<p>分类是在三个数据集上：</p>
-<ul>
-<li>Omniglot</li>
-<li>miniImageNet</li>
-<li>CUB</li>
-</ul>
-<p>within-domain few-shot image classification</p>
-<h2 id="实验部分设计"><a href="#实验部分设计" class="headerlink" title="实验部分设计"></a>实验部分设计</h2><p><strong>实验的随机种子，会影响初始化权重值，以及训练、测试、验证任务集。</strong></p>
-<p>2.测量更新方向之间的余弦相似度作为反距离度量，余弦相似度可以更好地衡量方向相似度，因为它从向量的大小中抽象出来。</p>
-<p>3.用-表示在限制的资源下，实验并没有运行完成。</p>
-<p>4.使用足够大隐藏维度的 LSTM 可以通过使用隐藏表示的前 N 个维度来执行学习并为下一个时间步<strong>保留重要信息</strong>，并使用剩余维度来表示输入表示，从而将学习与输入表示分开。</p>
-<h3 id="Cross-domain"><a href="#Cross-domain" class="headerlink" title="Cross-domain"></a>Cross-domain</h3><p>拿两个数据集，在一个数据集上训练，在另一个数据集上校验，但是要保证两个数据集没有交叉？？？</p>
-<p>Frobenius norm</p>
-<h2 id="一些吹嘘"><a href="#一些吹嘘" class="headerlink" title="一些吹嘘"></a>一些吹嘘</h2><p>作者一直在说OP-LSTM与其他方法正交，可以和其他方法同时使用，但是把它们留在了未来工作。</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1238,7 +1210,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">181</span>
+          <span class="site-state-item-count">182</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
