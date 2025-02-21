@@ -68,9 +68,12 @@ index_generator:
 # Category & Tag
 default_category: '笔记' #uncategorized
 category_map: 
-  '算法': Algo
+  '算法': Algorithm
   '区块链': BlockChain
-  'CTF': CTF
+  '逆向': Reverse
+  '漏洞挖掘': BugBounty
+  '安全攻防': HW
+  '渗透测试': PenTest
   '日记': Diary
   'Linux': Linux
   '机器学习': ML

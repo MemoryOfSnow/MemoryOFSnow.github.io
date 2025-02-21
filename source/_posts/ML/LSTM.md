@@ -44,6 +44,14 @@ h_{t}=\sigma\left(x_{t} \times w_{x t}+h_{t-1} \times w_{h t}+b\right)
 
 引入门控机制，选择性遗忘一些无用信息，从而控制信息的累积。
 
+## 以LSTM为元学习器
+
+>  Huisman, M., Moerland, T.M., Plaat, A. *et al.* Are LSTMs good few-shot learners?. *Mach Learn* **112**, 4635–4662 (2023). https://doi.org/10.1007/s10994-023-06394-x 
+
+隐状态和记忆单元
+
+
+
 ## LSTM总结
 
 > 参考https://easyai.tech/ai-definition/lstm/

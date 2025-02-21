@@ -28,3 +28,4 @@ Off-line Learning
 
 
 Generalization  ，即SGDM收敛性一般优于Adam，而Adam训练起来比较快。可以设置Learning rate range，即upbound和lower bound，设置好stepsize，动态一大一小地设置学习率。
+

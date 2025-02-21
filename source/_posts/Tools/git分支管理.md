@@ -5,6 +5,23 @@ categories: Tools
 tags: [git,hexo]
 ---
 
+## git克隆部分文件
+
+```
+git clone -n --filter=blob:none git://github.com/vxunderground/MalwareSourceCode.git MalwareSourceCode
+cd MalwareSourceCode
+git sparse-checkout init
+git sparse-checkout set Python/ Win32/ Linux/
+git sparse-checkout list
+
+git pull origin main
+git checkout main -- Win32/Botnets 
+```
+
+```
+git clone -b main  --depth=1     --filter=blob:none    --sparse     https://github.com/vxunderground/MalwareSourceCode.git MalwareSourceCode
+```
+
 
 
 

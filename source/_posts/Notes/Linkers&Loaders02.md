@@ -90,6 +90,7 @@ ELF Header，描述整个文件的文件属性，包括文件是否可执行、�
 | .debug            | 调试信息                                                     |
 | .line             | 调试时的行号表，源代码行号与编译后指令的对应表               |
 | .eh_frame         | 存储异常处理框架（Exception Handling Frame）的相关信息。包括异常处理函数的调用关系、异常处理函数的地址、堆栈展开信息等。 |
+| SHT               | 表示 "Section Header Table                                   |
 
 
 ![1684811465144](Linkers&Loaders02/1684811465144.png)
@@ -102,7 +103,7 @@ ELF Header，描述整个文件的文件属性，包括文件是否可执行、�
 | .strtab     | String Table，字符串表                                       |
 | .symtab     | Symbol Table，符号表                                         |
 | .shstrtab   | Section Header String table,段名表，集中管理段名称。不存储用户自定义的字符串，而是存储与 ELF 文件结构相关的字符串 |
-| .plt\\.got  | (Procedure Linkage Table,过程链接表)，是动态链接的跳转表，用于延时加载；                       全局入口表 Global Offset Table |
+| .plt\\.got  | (Procedure Linkage Table,过程链接表)，是动态链接的跳转表，用于延时加载；       全局入口表 Global Offset Table |
 | .init,.fini | 程序初始化与终结代码段                                       |
 
 > .表示这些段名由系统保留，应用程序自定义段名不能加.，否则容易跟系统保留段名冲突。

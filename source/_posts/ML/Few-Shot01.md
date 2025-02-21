@@ -81,6 +81,10 @@ mathjax: true
 
 ## 解决问题的三个角度
 
+> Wang, Y., Yao, Q., Kwok, J.T., & Ni, L.M. (2019). Generalizing from a Few Examples: A Survey on Few-Shot Learning. *arXiv: Learning*. 
+
+
+
 > 借助先验知识减小经验风险
 
 - 数据角度  

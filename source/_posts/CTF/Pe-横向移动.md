@@ -5,6 +5,16 @@ categories: CTF
 tags: [渗透]
 ---
 
+ **http://169.254.169.254/latest/meta-data/** 
+
+**这些端点会泄露API密钥、AWS S3令牌和密码等敏感信息。**
+
+**以下是一份来自亚马逊的完整文档，**
+
+**https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-instance-metadata.html**
+
+
+
 ## 利用Windows内置工具
 
 - IPC+Schtasks+AT

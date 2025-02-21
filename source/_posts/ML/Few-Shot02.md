@@ -30,7 +30,7 @@ mathjax: true
 ![1668706082696](Few-Shot02/1668706082696.png)
 
 > （1）**support set** :每次训练的样本集合很小，的数据集，用以提供参考信息，不足以训练大型神经网络。
->  （2）**query set** :用于与训练样本比对的样本，一般来说query set就是一个样本。Query data的类别属于support data中的类别，Q的类别可以在S中看到，但在训练数据集里看不到。 
+>  （2）**query set** :用于与训练样本比对的样本，一般来说query set就是一个样本。Query data的类别属于support data中的类别，训练集中的Q'的类别可以在S中看到，但在测试时的数据集里Q'无法在S'中看到。 
 >
 > （3）在support set中，如果有n个种类，每个种类有k个样本，那么这个训练过程叫n -way k-shot ，如下图就是5-way 1-shot。 
 
